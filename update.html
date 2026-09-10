@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="pageTitle">Update — NWisp</title>
+<meta name="description" content="Full detail on a specific NWisp update.">
+<meta property="og:image" content="og-image.png">
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+<div class="grain"></div>
+
+<nav class="nav">
+  <a href="index.html" class="nav-brand">
+    <span class="brand-mark"></span>
+    NWisp
+  </a>
+  <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false" id="navToggle">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-links" id="navLinks">
+    <a href="index.html#concept">Concept</a>
+    <a href="index.html#features">Features</a>
+    <a href="index.html#scope">Scope</a>
+    <a href="index.html#status">Status</a>
+    <a href="updates.html" class="is-active">Updates</a>
+    <a href="index.html#faq">FAQ</a>
+    <a href="index.html#contact">Contact</a>
+  </div>
+  <a href="index.html#contact" class="nav-cta">Get in touch</a>
+</nav>
+
+<div class="breadcrumb-bar">
+  <div class="breadcrumb" id="breadcrumb">
+    <a href="index.html">Home</a>
+    <span class="crumb-sep">/</span>
+    <a href="updates.html">Updates</a>
+    <span class="crumb-sep">/</span>
+    <span class="crumb-current" id="crumbCurrent">…</span>
+  </div>
+</div>
+
+<header class="update-detail-header">
+  <div class="update-detail-top" id="detailTop"><!-- pill + date --></div>
+  <h1 class="update-detail-title" id="detailTitle">Loading…</h1>
+  <p class="update-detail-intro" id="detailIntro"></p>
+</header>
+
+<div class="update-detail-body" id="detailBody">
+  <!-- rendered by script -->
+
+  <div class="update-detail-footer-nav">
+    <a href="updates.html" class="btn btn-ghost btn-sm">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" width="14" height="14"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+      All updates
+    </a>
+    <a href="index.html" class="btn btn-ghost btn-sm">Back to home</a>
+  </div>
+</div>
+
+<footer class="footer">
+  <p>NWisp — Private conversations. Temporary presence.</p>
+  <p class="footer-sub">Built honestly, not oversold.</p>
+  <div class="footer-links">
+    <a href="index.html">Home</a>
+    <a href="updates.html">Updates</a>
+    <a href="index.html#contact">Contact</a>
+  </div>
+</footer>
+
+<script src="assets/updates-data.js"></script>
+<script>
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', () => {
+    const open = navLinks.classList.toggle('is-open');
+    navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+
+  (function renderDetail(){
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('id');
+    const updates = window.NWISP_UPDATES || [];
+    const entry = updates.find(u => u.id === id) || updates[0];
+
+    const body = document.getElementById('detailBody');
+
+    if (!entry) {
+      document.getElementById('detailTitle').textContent = 'Update not found';
+      document.getElementById('crumbCurrent').textContent = 'Not found';
+      document.getElementById('detailIntro').textContent = 'This update may have been renamed or removed.';
+      return;
+    }
+
+    const pillClass = entry.tag === 'major' ? 'tag-major' : (entry.tag === 'added' ? 'tag-added' : 'tag-changed');
+
+    document.getElementById('pageTitle').textContent = entry.title + ' — NWisp';
+    document.getElementById('crumbCurrent').textContent = entry.title;
+    document.getElementById('detailTop').innerHTML =
+      `<span class="tag-pill ${pillClass}">${entry.tagLabel}</span><span class="entry-date">${entry.date}</span>`;
+    document.getElementById('detailTitle').textContent = entry.title;
+    document.getElementById('detailIntro').textContent = entry.intro;
+
+    function section(key, label, cls, icon){
+      const items = (entry.detail && entry.detail[key]) || [];
+      if (!items.length) return '';
+      const itemsHtml = items.map(it => `
+        <div class="detail-item">
+          <div class="detail-item-title">${it.title}</div>
+          <div class="detail-item-body">${it.body}</div>
+        </div>
+      `).join('');
+      return `
+        <div class="detail-section ${cls}">
+          <div class="detail-section-heading">
+            <span class="tag-pill ${cls === 'sec-added' ? 'tag-added' : cls === 'sec-removed' ? 'tag-removed' : 'tag-changed'}">${label}</span>
+          </div>
+          ${itemsHtml}
+        </div>
+      `;
+    }
+
+    const sectionsHtml =
+      section('added', 'Added', 'sec-added') +
+      section('changed', 'Changed', 'sec-changed') +
+      section('removed', 'Removed', 'sec-removed');
+
+    // insert sections before the footer-nav div that's already in the DOM
+    const footerNav = body.querySelector('.update-detail-footer-nav');
+    const wrapper = document.createElement('div');
+    wrapper.innerHTML = sectionsHtml;
+    body.insertBefore(wrapper, footerNav);
+  })();
+</script>
+</body>
+</html>
