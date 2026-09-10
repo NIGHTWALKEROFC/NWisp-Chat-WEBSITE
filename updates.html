@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Updates — NWisp</title>
+<meta name="description" content="Everything added, changed, or removed in NWisp, in order.">
+<meta property="og:title" content="Updates — NWisp">
+<meta property="og:image" content="og-image.png">
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+<div class="grain"></div>
+
+<nav class="nav">
+  <a href="index.html" class="nav-brand">
+    <span class="brand-mark"></span>
+    NWisp
+  </a>
+  <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false" id="navToggle">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-links" id="navLinks">
+    <a href="index.html#concept">Concept</a>
+    <a href="index.html#features">Features</a>
+    <a href="index.html#scope">Scope</a>
+    <a href="index.html#status">Status</a>
+    <a href="updates.html" class="is-active">Updates</a>
+    <a href="index.html#faq">FAQ</a>
+    <a href="index.html#contact">Contact</a>
+  </div>
+  <a href="index.html#contact" class="nav-cta">Get in touch</a>
+</nav>
+
+<div class="breadcrumb-bar">
+  <div class="breadcrumb">
+    <a href="index.html">Home</a>
+    <span class="crumb-sep">/</span>
+    <span class="crumb-current">Updates</span>
+  </div>
+</div>
+
+<div class="page-header">
+  <p class="section-eyebrow">Changelog</p>
+  <h1 class="section-title">Everything added, changed, or removed</h1>
+  <p class="page-header-copy">
+    A running record of how NWisp has changed, newest first. Each entry lists
+    the main points here — click "Read more" on any entry for the full
+    write-up, including why something changed.
+  </p>
+</div>
+
+<section>
+  <div class="updates-list" id="updatesList">
+    <!-- rendered by script from assets/updates-data.js -->
+  </div>
+</section>
+
+<footer class="footer">
+  <p>NWisp — Private conversations. Temporary presence.</p>
+  <p class="footer-sub">Built honestly, not oversold.</p>
+  <div class="footer-links">
+    <a href="index.html">Home</a>
+    <a href="index.html#faq">FAQ</a>
+    <a href="index.html#contact">Contact</a>
+  </div>
+</footer>
+
+<script src="assets/updates-data.js"></script>
+<script>
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', () => {
+    const open = navLinks.classList.toggle('is-open');
+    navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+
+  (function renderUpdatesList(){
+    const list = document.getElementById('updatesList');
+    const updates = window.NWISP_UPDATES || [];
+    if (!updates.length) {
+      list.innerHTML = '<div class="empty-state">No updates posted yet — check back soon.</div>';
+      return;
+    }
+    list.innerHTML = updates.map(u => {
+      const pillClass = u.tag === 'major' ? 'tag-major' : (u.tag === 'added' ? 'tag-added' : 'tag-changed');
+      const pointsHtml = u.points.map(p => {
+        const cls = p.type === 'added' ? 'update-point-added' : (p.type === 'removed' ? 'update-point-removed' : 'update-point-changed');
+        return `<li class="${cls}">${p.text}</li>`;
+      }).join('');
+      return `
+        <article class="update-entry-card">
+          <div class="update-entry-top">
+            <span class="tag-pill ${pillClass}">${u.tagLabel}</span>
+            <span class="entry-date">${u.date}</span>
+          </div>
+          <h2 class="update-entry-title">${u.title}</h2>
+          <p class="update-entry-intro">${u.intro}</p>
+          <ul class="update-entry-points">${pointsHtml}</ul>
+          <a class="update-entry-more" href="update.html?id=${encodeURIComponent(u.id)}">
+            Read more
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </article>
+      `;
+    }).join('');
+  })();
+</script>
+</body>
+</html>
