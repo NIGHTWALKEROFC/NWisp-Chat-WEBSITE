@@ -26,7 +26,7 @@ window.NWISP_UPDATES = [
     tagLabel: "Major update",
     title: "Group chats, real forward-secret encryption, and a lot more control",
     intro:
-      "This is the biggest change since NWisp started. The encryption underneath every chat has been rebuilt on the Signal Protocol, group chats are here, and a full set of account-security and trust-and-safety tools shipped alongside them.",
+      "This is the biggest change since NWisp Chat started. The encryption underneath every chat has been rebuilt on the Signal Protocol, group chats are here, and a full set of account-security and trust-and-safety tools shipped alongside them.",
     points: [
       { type: "added", text: "Group chats — create a group, add contacts directly or invite people who have to accept, admins, rename/description/photo" },
       { type: "added", text: "Voice messages — record and send in both 1:1 and group chats" },
@@ -92,7 +92,7 @@ window.NWISP_UPDATES = [
         },
         {
           title: "Personalization",
-          body: "Pick from 16 accent colors, 8 built-in wallpapers or upload your own photo, and set a custom logo — the app no longer has to look like the default NWisp branding if you don't want it to."
+          body: "Pick from 16 accent colors, 8 built-in wallpapers or upload your own photo, and set a custom logo — the app no longer has to look like the default NWisp Chat branding if you don't want it to."
         },
         {
           title: "In-app media viewer",
