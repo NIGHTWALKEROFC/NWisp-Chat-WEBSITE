@@ -3,1156 +3,467 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NWisp — Your conversations. Your privacy.</title>
-<meta name="description" content="NWisp is a privacy-first chat app where messages are encrypted on your device and stored there, not on a server. Sign up with just an email and username — no phone number required. Android only, in development.">
-<meta property="og:title" content="NWisp — Your conversations. Your privacy.">
-<meta property="og:description" content="A privacy-first chat app. Messages are encrypted on your device, kept there instead of on a server, with an optional disappearing-messages toggle if you want a chat to clear itself. Username-first identity, disappearing Stories.">
-<meta property="og:type" content="website">
+<title>NWisp — Private conversations. Temporary presence.</title>
+<meta name="description" content="NWisp is a privacy-first chat app: end-to-end encrypted messaging built on the Signal Protocol, group chats, and 24-hour Stories. No feed, no permanent posts, no ads.">
+<meta property="og:title" content="NWisp — Private conversations. Temporary presence.">
+<meta property="og:description" content="End-to-end encrypted chat and 24-hour Stories. Built honestly, not oversold.">
 <meta property="og:image" content="og-image.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="NWisp — Your conversations. Your privacy.">
-<meta name="twitter:description" content="A privacy-first chat app with on-device encrypted storage, 24-hour Stories, and no phone number required.">
-<meta name="twitter:image" content="og-image.png">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='42' fill='%23090B10' stroke='%23FFB37B' stroke-width='6'/%3E%3Ccircle cx='50' cy='50' r='10' fill='%23FFB37B'/%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:,">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-/* ============================================================
-   NWisp — design tokens
-   ============================================================ */
-:root{
-  --bg: #090B10;
-  --bg-alt: #0D1016;
-  --panel: #12151C;
-  --panel-2: #171B24;
-  --border: #1E2330;
-  --border-soft: #191D27;
-
-  --text: #ECEFF4;
-  --text-muted: #8B93A3;
-  --text-dim: #565E6E;
-
-  --amber: #FFB37B;
-  --amber-dim: #8A6647;
-  --blue: #6FA8FF;
-  --green: #7CDB9C;
-
-  --font-display: 'Space Grotesk', 'Inter', sans-serif;
-  --font-body: 'Inter', sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
-
-  --radius: 14px;
-  --radius-sm: 8px;
-  --wrap: 1120px;
-}
-
-*{ box-sizing: border-box; }
-html{ scroll-behavior: smooth; }
-
-body{
-  margin: 0;
-  background: var(--bg);
-  color: var(--text);
-  font-family: var(--font-body);
-  font-size: 16px;
-  line-height: 1.55;
-  -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
-}
-
-/* subtle film-grain / noise texture, purely atmospheric */
-.grain{
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 50;
-  opacity: 0.035;
-  mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-
-a{ color: inherit; text-decoration: none; }
-ul{ margin: 0; padding: 0; list-style: none; }
-h1,h2,h3,h4{ font-family: var(--font-display); margin: 0; font-weight: 600; }
-p{ margin: 0; }
-
-.section-eyebrow{
-  font-family: var(--font-mono);
-  font-size: 12.5px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--amber);
-  margin: 0 0 12px;
-}
-.section-title{
-  font-size: clamp(1.6rem, 3vw, 2.2rem);
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  max-width: 40ch;
-  margin-bottom: 40px;
-  color: var(--text);
-}
-
-/* ============================================================
-   NAV
-   ============================================================ */
-.nav{
-  position: sticky;
-  top: 0;
-  z-index: 40;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 24px;
-  padding: 18px clamp(20px, 5vw, 56px);
-  background: rgba(9,11,16,0.78);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--border-soft);
-}
-.nav-brand{
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 18px;
-  letter-spacing: -0.01em;
-  flex-shrink: 0;
-}
-.brand-mark{
-  width: 9px; height: 9px;
-  border-radius: 50%;
-  background: var(--amber);
-  box-shadow: 0 0 0 3px rgba(255,179,123,0.15);
-  animation: breathe 3.4s ease-in-out infinite;
-}
-.nav-links{
-  display: flex;
-  gap: 28px;
-  font-size: 14px;
-  color: var(--text-muted);
-}
-.nav-links a:hover{ color: var(--text); }
-.nav-cta{
-  font-family: var(--font-mono);
-  font-size: 13px;
-  padding: 8px 14px;
-  border: 1px solid var(--border);
-  border-radius: 100px;
-  color: var(--text-muted);
-  flex-shrink: 0;
-  transition: border-color .2s, color .2s;
-}
-.nav-cta:hover{ border-color: var(--amber-dim); color: var(--amber); }
-
-.nav-toggle{
-  display: none;
-  flex-direction: column;
-  justify-content: center;
-  gap: 5px;
-  width: 34px;
-  height: 34px;
-  padding: 0;
-  border: 1px solid var(--border);
-  border-radius: 9px;
-  background: var(--bg-alt);
-  cursor: pointer;
-  flex-shrink: 0;
-}
-.nav-toggle span{
-  display: block;
-  width: 16px;
-  height: 1.5px;
-  margin: 0 auto;
-  background: var(--text-muted);
-  transition: transform .2s ease, opacity .2s ease;
-}
-.nav-toggle[aria-expanded="true"] span:nth-child(1){ transform: translateY(6.5px) rotate(45deg); }
-.nav-toggle[aria-expanded="true"] span:nth-child(2){ opacity: 0; }
-.nav-toggle[aria-expanded="true"] span:nth-child(3){ transform: translateY(-6.5px) rotate(-45deg); }
-
-@media (max-width: 760px){
-  .nav-links{
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background: #0A0C11;
-    border-bottom: 1px solid var(--border-soft);
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height .25s ease;
-  }
-  .nav-links.is-open{ max-height: 400px; }
-  .nav-links a{
-    padding: 16px clamp(20px, 5vw, 56px);
-    border-top: 1px solid var(--border-soft);
-    font-size: 15px;
-    background: #0A0C11;
-  }
-  .nav-cta{ display: none; }
-  .nav-toggle{ display: flex; }
-}
-
-/* ============================================================
-   HERO
-   ============================================================ */
-.hero{
-  max-width: var(--wrap);
-  margin: 0 auto;
-  padding: clamp(48px, 8vw, 96px) clamp(20px, 5vw, 56px) clamp(40px, 6vw, 72px);
-  display: grid;
-  grid-template-columns: 1.15fr 0.85fr;
-  gap: 48px;
-  align-items: center;
-}
-@media (max-width: 900px){
-  .hero{ grid-template-columns: 1fr; }
-}
-
-.eyebrow{
-  font-family: var(--font-mono);
-  font-size: 12.5px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--text-dim);
-  border: 1px solid var(--border);
-  display: inline-block;
-  padding: 5px 12px;
-  border-radius: 100px;
-  margin-bottom: 22px;
-}
-.hero h1{
-  font-size: clamp(3.2rem, 9vw, 5.4rem);
-  letter-spacing: -0.03em;
-  line-height: 0.95;
-  background: linear-gradient(180deg, #FFFFFF 0%, #B9C0CE 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-.tagline{
-  font-family: var(--font-display);
-  font-size: clamp(1.15rem, 2.2vw, 1.55rem);
-  color: var(--amber);
-  margin: 14px 0 22px;
-  line-height: 1.3;
-}
-.hero-copy{
-  max-width: 46ch;
-  color: var(--text-muted);
-  font-size: 16.5px;
-  margin-bottom: 34px;
-}
-.hero-actions{ display: flex; flex-wrap: wrap; gap: 14px; }
-
-.btn{
-  font-family: var(--font-body);
-  font-weight: 600;
-  font-size: 14.5px;
-  padding: 13px 22px;
-  border-radius: 100px;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  transition: transform .15s ease, background .2s, border-color .2s, color .2s;
-  border: 1px solid transparent;
-}
-.btn:hover{ transform: translateY(-1px); }
-.btn-primary{
-  background: var(--amber);
-  color: #1B1206;
-}
-.btn-primary:hover{ background: #ffc196; }
-.btn-ghost{
-  border-color: var(--border);
-  color: var(--text);
-}
-.btn-ghost:hover{ border-color: var(--amber-dim); color: var(--amber); }
-
-/* --- hero visual: phone + presence ring --- */
-.hero-visual{
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 420px;
-}
-.phone{
-  position: relative;
-  width: 236px;
-  height: 460px;
-  background: linear-gradient(180deg, var(--panel-2), var(--panel));
-  border: 1px solid var(--border);
-  border-radius: 34px;
-  padding: 30px 16px 16px;
-  box-shadow: 0 30px 80px -20px rgba(0,0,0,0.7), inset 0 0 0 1px rgba(255,255,255,0.02);
-}
-.phone-notch{
-  position: absolute;
-  top: 12px; left: 50%;
-  transform: translateX(-50%);
-  width: 64px; height: 6px;
-  border-radius: 100px;
-  background: var(--border);
-}
-.phone-screen{
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  height: 100%;
-  justify-content: flex-end;
-}
-.chat-row{ display: flex; }
-.row-right{ justify-content: flex-end; }
-.bubble{
-  max-width: 82%;
-  padding: 10px 13px;
-  border-radius: 16px;
-  font-size: 13px;
-  line-height: 1.4;
-  animation: bubble-in 0.6s ease both;
-}
-.bubble-in{
-  background: var(--panel-2);
-  border: 1px solid var(--border);
-  border-bottom-left-radius: 4px;
-  color: var(--text);
-}
-.bubble-out{
-  background: rgba(111,168,255,0.14);
-  border: 1px solid rgba(111,168,255,0.3);
-  border-bottom-right-radius: 4px;
-  color: #D6E4FF;
-}
-.bubble-ghost{
-  animation: bubble-in 0.6s ease 0.4s both, ghost-fade 5s ease-in-out 2.5s infinite;
-}
-
-.presence-ring{
-  position: absolute;
-  right: -6px;
-  bottom: 8px;
-  width: 108px;
-  height: 108px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.ring-svg{ position: absolute; inset: 0; width: 100%; height: 100%; transform: rotate(-90deg); }
-.ring-track{
-  fill: var(--bg);
-  stroke: var(--border);
-  stroke-width: 5;
-}
-.ring-progress{
-  fill: none;
-  stroke: var(--amber);
-  stroke-width: 5;
-  stroke-linecap: round;
-  stroke-dasharray: 327;
-  stroke-dashoffset: 327;
-  animation: ring-drain 24s linear infinite;
-  filter: drop-shadow(0 0 6px rgba(255,179,123,0.55));
-}
-.ring-label{
-  position: relative;
-  text-align: center;
-  font-family: var(--font-mono);
-}
-.ring-number{ display: block; font-size: 22px; font-weight: 500; color: var(--text); }
-.ring-unit{ display: block; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-dim); }
-
-@keyframes ring-drain{
-  0%{ stroke-dashoffset: 0; }
-  100%{ stroke-dashoffset: 327; }
-}
-@keyframes bubble-in{
-  from{ opacity: 0; transform: translateY(6px); }
-  to{ opacity: 1; transform: translateY(0); }
-}
-@keyframes ghost-fade{
-  0%, 100%{ opacity: 1; filter: blur(0); }
-  55%{ opacity: 0.12; filter: blur(1.5px); }
-}
-@keyframes breathe{
-  0%, 100%{ opacity: 1; box-shadow: 0 0 0 3px rgba(255,179,123,0.15); }
-  50%{ opacity: 0.55; box-shadow: 0 0 0 6px rgba(255,179,123,0.06); }
-}
-
-@media (max-width: 900px){
-  .hero-visual{ margin-top: 12px; }
-}
-
-/* ============================================================
-   SHARED SECTION WRAPPER
-   ============================================================ */
-section:not(.hero){
-  max-width: var(--wrap);
-  margin: 0 auto;
-  padding: clamp(56px, 8vw, 88px) clamp(20px, 5vw, 56px);
-}
-
-/* ============================================================
-   CONCEPT — pillars
-   ============================================================ */
-.pillars{
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1px;
-  background: var(--border);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  overflow: hidden;
-}
-.pillar{
-  background: var(--bg-alt);
-  padding: 34px 28px;
-}
-.pillar-icon{
-  width: 38px; height: 38px;
-  display: flex; align-items: center; justify-content: center;
-  color: var(--amber);
-  margin-bottom: 18px;
-}
-.pillar-icon svg{ width: 22px; height: 22px; }
-.pillar h3{
-  font-size: 17.5px;
-  margin-bottom: 10px;
-  line-height: 1.3;
-}
-.pillar p{ color: var(--text-muted); font-size: 14.5px; }
-
-@media (max-width: 800px){
-  .pillars{ grid-template-columns: 1fr; }
-}
-
-/* ============================================================
-   FEATURES
-   ============================================================ */
-.feature-grid{
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
-}
-.feature-card{
-  background: var(--panel);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 26px 22px;
-}
-.feature-card h4{
-  font-family: var(--font-mono);
-  font-size: 13px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--blue);
-  margin-bottom: 16px;
-}
-.feature-card li{
-  font-size: 14px;
-  color: var(--text-muted);
-  padding: 8px 0;
-  border-top: 1px solid var(--border-soft);
-}
-.feature-card li:first-child{ border-top: none; padding-top: 0; }
-
-@media (max-width: 1000px){
-  .feature-grid{ grid-template-columns: repeat(2, 1fr); }
-}
-@media (max-width: 560px){
-  .feature-grid{ grid-template-columns: 1fr; }
-}
-
-/* ============================================================
-   SCOPE (what's not here)
-   ============================================================ */
-.scope{ border-top: 1px solid var(--border-soft); }
-.scope-copy{
-  color: var(--text-muted);
-  max-width: 62ch;
-  margin-bottom: 26px;
-  font-size: 15.5px;
-}
-.chip-row{ display: flex; flex-wrap: wrap; gap: 10px; }
-.chip{
-  font-family: var(--font-mono);
-  font-size: 12.5px;
-  color: var(--text-dim);
-  border: 1px dashed var(--border);
-  padding: 7px 13px;
-  border-radius: 100px;
-}
-
-/* ============================================================
-   STATUS
-   ============================================================ */
-.status{ border-top: 1px solid var(--border-soft); }
-.status-copy{
-  color: var(--text-muted);
-  max-width: 66ch;
-  margin-bottom: 14px;
-  font-size: 15.5px;
-}
-.status-asof{
-  font-family: var(--font-mono);
-  font-size: 12px;
-  color: var(--text-dim);
-  margin-bottom: 36px;
-}
-.status-track{
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-  max-width: 720px;
-}
-.status-item{
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 14px 16px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  background: var(--bg-alt);
-}
-.status-dot{
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-.is-done .status-dot{ background: var(--green); }
-.is-progress .status-dot{ background: var(--amber); animation: breathe 2.4s ease-in-out infinite; }
-.is-pending .status-dot{ background: var(--text-dim); }
-.status-text{ font-size: 14px; color: var(--text-muted); }
-.is-done .status-text{ color: var(--text); }
-
-@media (max-width: 640px){
-  .status-track{ grid-template-columns: 1fr; }
-}
-
-/* ============================================================
-   FAQ
-   ============================================================ */
-.faq{ border-top: 1px solid var(--border-soft); }
-.faq-list{
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  max-width: 760px;
-}
-.faq-item{
-  background: var(--panel);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 4px 20px;
-  transition: border-color .2s;
-}
-.faq-item[open]{ border-color: var(--amber-dim); }
-.faq-item summary{
-  list-style: none;
-  cursor: pointer;
-  padding: 16px 30px 16px 0;
-  font-size: 15px;
-  font-weight: 500;
-  color: var(--text);
-  position: relative;
-}
-.faq-item summary::-webkit-details-marker{ display: none; }
-.faq-item summary::after{
-  content: "+";
-  position: absolute;
-  right: 0;
-  top: 14px;
-  font-family: var(--font-mono);
-  font-size: 18px;
-  color: var(--amber);
-  transition: transform .2s;
-}
-.faq-item[open] summary::after{
-  content: "–";
-}
-.faq-item p{
-  font-size: 14px;
-  color: var(--text-muted);
-  padding-bottom: 18px;
-  max-width: 62ch;
-}
-
-/* ============================================================
-   CONTACT
-   ============================================================ */
-.contact{ border-top: 1px solid var(--border-soft); }
-
-.contact-panel{
-  background: var(--panel);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: clamp(28px, 4vw, 44px);
-}
-.contact-identity{
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  margin-bottom: 20px;
-}
-.contact-avatar{
-  width: 48px; height: 48px;
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  background: rgba(255,179,123,0.12);
-  border: 1px solid var(--amber-dim);
-  color: var(--amber);
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 15px;
-  flex-shrink: 0;
-}
-.contact-name{ display: block; font-family: var(--font-display); font-size: 17px; font-weight: 600; color: var(--text); }
-.contact-role{ display: block; font-family: var(--font-mono); font-size: 12px; color: var(--text-dim); margin-top: 3px; }
-
-.contact-copy{
-  color: var(--text-muted);
-  max-width: 62ch;
-  margin-bottom: 24px;
-  font-size: 15px;
-}
-.contact-copy a{ color: var(--amber); border-bottom: 1px solid var(--amber-dim); }
-.contact-cta-row{ display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-bottom: 10px; }
-.notify-note{
-  font-size: 12.5px;
-  color: var(--text-dim);
-  max-width: 56ch;
-}
-.contact-divider{ height: 1px; background: var(--border-soft); margin: 30px 0 6px; }
-
-.contact-list{
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  column-gap: 32px;
-}
-.contact-row{
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 15px 4px;
-  border-bottom: 1px solid var(--border-soft);
-  transition: padding-left .15s ease;
-}
-.contact-row:last-child, .contact-list > .contact-row:nth-last-child(2){ }
-.contact-row:hover{ padding-left: 8px; }
-.contact-row:hover .contact-value{ color: var(--amber); }
-.contact-row:hover .contact-row-arrow{ opacity: 1; transform: translate(2px,-2px); }
-.contact-row-icon{
-  width: 34px; height: 34px;
-  flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center;
-  border-radius: 9px;
-  background: var(--bg-alt);
-  border: 1px solid var(--border);
-  color: var(--amber);
-}
-.contact-row-icon svg{ width: 16px; height: 16px; }
-.contact-row-text{ flex: 1; min-width: 0; }
-.contact-row .contact-label{
-  display: block;
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--text-dim);
-}
-.contact-row .contact-value{
-  display: block;
-  font-size: 14px;
-  color: var(--text);
-  margin-top: 2px;
-  transition: color .15s ease;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.contact-row-arrow{
-  font-family: var(--font-mono);
-  font-size: 13px;
-  color: var(--text-dim);
-  opacity: 0;
-  transition: opacity .15s ease, transform .15s ease;
-  flex-shrink: 0;
-}
-
-@media (max-width: 640px){
-  .contact-list{ grid-template-columns: 1fr; }
-}
-
-/* ============================================================
-   FOOTER
-   ============================================================ */
-.footer{
-  border-top: 1px solid var(--border-soft);
-  padding: 32px clamp(20px, 5vw, 56px) 44px;
-  max-width: var(--wrap);
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-.footer p{ font-size: 13.5px; color: var(--text-muted); }
-.footer-sub{ font-family: var(--font-mono); font-size: 12px; color: var(--text-dim); }
-
-/* ============================================================
-   APP UPDATES — overlay panel (not part of normal page flow;
-   only reachable via the nav link)
-   ============================================================ */
-.updates-overlay{
-  position: fixed;
-  inset: 0;
-  z-index: 100;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
-  background: rgba(6,7,10,0.72);
-  backdrop-filter: blur(6px);
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity .22s ease;
-}
-.updates-overlay.is-open{
-  opacity: 1;
-  visibility: visible;
-}
-.updates-panel{
-  position: relative;
-  width: 100%;
-  max-width: 420px;
-  background: var(--panel);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 40px 32px 34px;
-  text-align: center;
-  transform: translateY(10px) scale(0.98);
-  transition: transform .22s ease;
-  box-shadow: 0 40px 100px -30px rgba(0,0,0,0.8);
-}
-.updates-overlay.is-open .updates-panel{
-  transform: translateY(0) scale(1);
-}
-.updates-close{
-  position: absolute;
-  top: 14px; right: 14px;
-  width: 32px; height: 32px;
-  display: flex; align-items: center; justify-content: center;
-  border-radius: 50%;
-  border: 1px solid var(--border);
-  background: var(--bg-alt);
-  color: var(--text-muted);
-  cursor: pointer;
-  transition: color .2s, border-color .2s;
-}
-.updates-close:hover{ color: var(--amber); border-color: var(--amber-dim); }
-.updates-close svg{ width: 15px; height: 15px; }
-.updates-icon{
-  width: 46px; height: 46px;
-  margin: 0 auto 20px;
-  display: flex; align-items: center; justify-content: center;
-  border-radius: 50%;
-  background: var(--bg-alt);
-  border: 1px solid var(--border);
-  color: var(--amber);
-}
-.updates-icon svg{ width: 22px; height: 22px; }
-.updates-panel .section-eyebrow{ margin-bottom: 10px; }
-.updates-title{
-  font-size: 20px;
-  margin-bottom: 12px;
-}
-.updates-body{
-  font-size: 14.5px;
-  color: var(--text-muted);
-  max-width: 34ch;
-  margin: 0 auto;
-}
-
-/* ============================================================
-   MOTION PREFERENCES
-   ============================================================ */
-@media (prefers-reduced-motion: reduce){
-  html{ scroll-behavior: auto; }
-  .brand-mark, .ring-progress, .bubble-ghost, .is-progress .status-dot{
-    animation: none !important;
-  }
-}
-
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
 </head>
 <body>
-
 <div class="grain"></div>
 
-<header class="nav">
-  <a href="#top" class="nav-brand">
-    <span class="brand-mark" aria-hidden="true"></span>
+<nav class="nav">
+  <a href="index.html" class="nav-brand">
+    <span class="brand-mark"></span>
     NWisp
   </a>
-  <nav class="nav-links" id="nav-links">
-    <a href="#concept">Concept</a>
-    <a href="#features">Features</a>
-    <a href="#status">Status</a>
-    <a href="#faq">FAQ</a>
-    <a href="#contact">Contact</a>
-    <a href="#" id="updates-trigger">App updates</a>
-  </nav>
-  <a class="nav-cta" href="https://github.com/NIGHTWALKEROFC" target="_blank" rel="noopener">GitHub ↗</a>
-  <button class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
+  <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false" id="navToggle">
     <span></span><span></span><span></span>
   </button>
+  <div class="nav-links" id="navLinks">
+    <a href="#concept">Concept</a>
+    <a href="#features">Features</a>
+    <a href="#scope">Scope</a>
+    <a href="#status">Status</a>
+    <a href="updates.html">Updates<span class="nav-updates-dot"></span></a>
+    <a href="#faq">FAQ</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <a href="#contact" class="nav-cta">Get in touch</a>
+</nav>
+
+<!-- ============================================================ HERO -->
+<header class="hero">
+  <div>
+    <span class="eyebrow">Currently in development</span>
+    <h1>NWisp</h1>
+    <p class="tagline">Private conversations. Temporary presence.</p>
+    <p class="hero-copy">
+      A chat app built around a simple idea: what you say to someone shouldn't sit
+      on a server forever, and no one but the two of you should be able to read it —
+      not even us. Messaging and 24-hour Stories, encrypted end-to-end on the
+      Signal Protocol.
+    </p>
+    <div class="hero-actions">
+      <a href="#features" class="btn btn-primary">See what's inside</a>
+      <a href="updates.html" class="btn btn-ghost">Latest update</a>
+    </div>
+    <div class="capability-row">
+      <span class="capability-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 4 6v6c0 5 3.5 8 8 10 4.5-2 8-5 8-10V6l-8-4Z"/></svg>Signal Protocol E2E</span>
+      <span class="capability-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="10" r="3"/><path d="M2 20c0-3 3-5 7-5s7 2 7 5"/></svg>Group chats</span>
+      <span class="capability-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>24h Stories</span>
+      <span class="capability-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>Hidden chats</span>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="phone">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+        <div class="chat-row"><div class="bubble bubble-in">hey, you still up?</div></div>
+        <div class="chat-row row-right">
+          <div>
+            <div class="bubble bubble-out bubble-ghost">yeah — what's going on</div>
+            <div class="bubble-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>encrypted</div>
+          </div>
+        </div>
+        <div class="chat-row"><div class="bubble bubble-in">nothing, just checking in</div></div>
+      </div>
+    </div>
+    <div class="presence-ring">
+      <svg class="ring-svg" viewBox="0 0 116 116">
+        <circle class="ring-track" cx="58" cy="58" r="52"></circle>
+        <circle class="ring-progress" cx="58" cy="58" r="52"></circle>
+      </svg>
+      <div class="ring-label"><span class="ring-number">24</span><span class="ring-unit">hours</span></div>
+    </div>
+  </div>
 </header>
 
-<main id="top">
+<!-- ============================================================ CONCEPT -->
+<section id="concept">
+  <p class="section-eyebrow">The idea</p>
+  <h2 class="section-title">Three things NWisp is built around</h2>
+  <div class="pillars">
+    <div class="pillar">
+      <div class="pillar-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></div>
+      <h3>Nobody in the middle</h3>
+      <p>Every message is end-to-end encrypted on the Signal Protocol — the same X3DH + Double Ratchet design used by other privacy-first messengers, so keys change constantly and old messages stay unreadable even if a later key leaks.</p>
+    </div>
+    <div class="pillar">
+      <div class="pillar-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+      <h3>Nothing sits around forever</h3>
+      <p>Messages are relayed and then removed server-side, capped at 24 hours whether they were delivered or not. Stories disappear after a day. There's no permanent server-side chat history to lose control of.</p>
+    </div>
+    <div class="pillar">
+      <div class="pillar-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+      <h3>You control who sees you</h3>
+      <p>A username-based public identity, contact requests instead of open discovery, blocking that's enforced at the delivery layer, and hidden chats for conversations you'd rather keep out of your main list.</p>
+    </div>
+  </div>
+</section>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-text">
-      <p class="eyebrow">In development — Android first</p>
-      <h1>NWisp</h1>
-      <p class="tagline">Your conversations.<br>Your privacy.</p>
-      <p class="hero-copy">A chat app built the way messaging should work: encrypted on your device and kept there, not on a server. Sign up with just an email and a username — no phone number needed. Want a conversation to clear itself automatically? Turn on disappearing messages for that chat; it's off by default, so everything else stays the way any normal conversation would. Stories still fade after 24 hours.</p>
-      <div class="hero-actions">
-        <a class="btn btn-primary" href="#contact">Get involved</a>
-        <a class="btn btn-ghost" href="https://github.com/NIGHTWALKEROFC" target="_blank" rel="noopener">Follow on GitHub</a>
+<!-- ============================================================ FEATURES -->
+<section id="features">
+  <p class="section-eyebrow">What's actually in it</p>
+  <h2 class="section-title">Every feature currently shipped in the app</h2>
+
+  <div class="feature-grid">
+
+    <div class="feature-card">
+      <div class="feature-card-head">
+        <div class="feature-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.4 8.4 0 0 1-1 4 8.5 8.5 0 0 1-7.6 4.6 8.4 8.4 0 0 1-4-1L3 21l1.9-5.4a8.4 8.4 0 0 1-1-4 8.5 8.5 0 0 1 4.6-7.6 8.4 8.4 0 0 1 4-1h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div>
+        <h4>1:1 &amp; group chat</h4>
       </div>
+      <ul>
+        <li>1:1 chats and full group chats with admins</li>
+        <li>Add contacts directly, or invite people who have to accept</li>
+        <li>Group rename, description, photo, admin-only-send toggle</li>
+        <li>Text, photos, videos, documents, and voice messages</li>
+        <li>Replies, 12-emoji reactions, typing indicators, read receipts</li>
+      </ul>
     </div>
 
-    <div class="hero-visual" aria-hidden="true">
-      <div class="phone">
-        <div class="phone-notch"></div>
-        <div class="phone-screen">
-          <div class="chat-row">
-            <div class="bubble bubble-in">hey, you free tonight?</div>
-          </div>
-          <div class="chat-row row-right">
-            <div class="bubble bubble-out">yeah, what's up</div>
-          </div>
-          <div class="chat-row">
-            <div class="bubble bubble-in">this stays right where it is</div>
-          </div>
-        </div>
+    <div class="feature-card">
+      <div class="feature-card-head">
+        <div class="feature-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 4 6v6c0 5 3.5 8 8 10 4.5-2 8-5 8-10V6l-8-4Z"/></svg></div>
+        <h4>Encryption &amp; verification</h4>
       </div>
-
-      <div class="presence-ring">
-        <svg viewBox="0 0 120 120" class="ring-svg">
-          <circle class="ring-track" cx="60" cy="60" r="52"/>
-          <circle class="ring-progress" cx="60" cy="60" r="52"/>
-        </svg>
-        <div class="ring-label">
-          <span class="ring-number">24</span>
-          <span class="ring-unit">hr stories</span>
-        </div>
-      </div>
+      <ul>
+        <li>Signal Protocol — X3DH key agreement + Double Ratchet</li>
+        <li>Forward secrecy: keys change with every message</li>
+        <li>Safety number verification between two contacts</li>
+        <li>QR code contact adding</li>
+        <li>Messages decrypted on-device only, stored locally</li>
+      </ul>
     </div>
-  </section>
 
-  <!-- CONCEPT -->
-  <section id="concept" class="concept">
-    <p class="section-eyebrow">How presence works here</p>
-    <h2 class="section-title">Three ideas the whole app is built around.</h2>
-
-    <div class="pillars">
-      <article class="pillar">
-        <div class="pillar-icon">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M12 12c2.7 0 4.9-2.2 4.9-4.9S14.7 2.2 12 2.2 7.1 4.4 7.1 7.1 9.3 12 12 12Z" stroke="currentColor" stroke-width="1.6"/><path d="M3.5 21.4c0-4.7 3.8-8.5 8.5-8.5s8.5 3.8 8.5 8.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-        </div>
-        <h3>Your username is the whole identity</h3>
-        <p>Sign up with just an email and a username — no phone number required, and your email never appears on your profile. People see a username and whatever bio you choose, nothing else.</p>
-      </article>
-
-      <article class="pillar">
-        <div class="pillar-icon">
-          <svg viewBox="0 0 24 24" fill="none"><rect x="5" y="10.5" width="14" height="10" rx="1.6" stroke="currentColor" stroke-width="1.6"/><path d="M8 10.5V7.8a4 4 0 0 1 8 0v2.7" stroke="currentColor" stroke-width="1.6"/></svg>
-        </div>
-        <h3>Encrypted before it leaves your phone</h3>
-        <p>Messages are encrypted on the sending device and decrypted on the receiving one, using established protocols rather than anything homemade. The server's job is to relay bytes, not read them.</p>
-      </article>
-
-      <article class="pillar">
-        <div class="pillar-icon">
-          <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9.2" stroke="currentColor" stroke-width="1.6"/><path d="M12 7v5l3.3 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-        </div>
-        <h3>Your device keeps the history, not the server</h3>
-        <p>Messages pass through the server just long enough for delivery, then they're deleted — nothing is stored there long-term. Everything that matters lives on your device and the other person's, encrypted at rest, for as long as you want it there. Want a chat to clear itself automatically instead? Turn on disappearing messages for that conversation — it's off by default.</p>
-      </article>
-    </div>
-  </section>
-
-  <!-- FEATURES -->
-  <section id="features" class="features">
-    <p class="section-eyebrow">What's actually in it</p>
-    <h2 class="section-title">Chat and Stories, done properly. Nothing else, on purpose.</h2>
-
-    <div class="feature-grid">
-      <div class="feature-card">
-        <h4>Chat</h4>
-        <ul>
-          <li>1:1 real-time chat — no groups yet</li>
-          <li>Replies, reactions, and typing indicators</li>
-          <li>Delivered and read receipts, online status and last-seen</li>
-          <li>Pin, copy, delete for yourself, or delete for everyone</li>
-          <li>Messages stored locally on your device, encrypted at rest</li>
-          <li>Disappearing messages — off by default, turn on per conversation</li>
-        </ul>
-      </div>
-      <div class="feature-card">
+    <div class="feature-card">
+      <div class="feature-card-head">
+        <div class="feature-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
         <h4>Stories</h4>
-        <ul>
-          <li>Post a Story, visible to your contacts</li>
-          <li>Disappears automatically after 24 hours, no exceptions</li>
-        </ul>
       </div>
-      <div class="feature-card">
-        <h4>Contacts &amp; privacy</h4>
-        <ul>
-          <li>Add people by username — no phone number needed to find or be found</li>
-          <li>Friend-style requests before someone can message you</li>
-          <li>Block anyone — their messages stop reaching you entirely</li>
-          <li>Your email is never shown on your profile</li>
-        </ul>
+      <ul>
+        <li>Photo and video Stories with 24-hour auto-expiry</li>
+        <li>Custom viewer circles — choose who sees each Story</li>
+        <li>Reply to a Story directly into chat</li>
+        <li>Reactions on Stories</li>
+      </ul>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-card-head">
+        <div class="feature-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></div>
+        <h4>Privacy controls</h4>
       </div>
-      <div class="feature-card">
-        <h4>Security &amp; appearance</h4>
-        <ul>
-          <li>Optional app-lock PIN on top of your device's own lock</li>
-          <li>Light, dark, or system theme</li>
-          <li>Custom accent color</li>
-        </ul>
+      <ul>
+        <li>Hidden chats behind a shared or per-chat code, plus optional PIN</li>
+        <li>"Pause this chat" — a mutual, timed freeze either side can start</li>
+        <li>Blocking enforced at the message-delivery layer</li>
+        <li>Screenshot &amp; screen-recording protection, on by default</li>
+        <li>Per-chat and app-wide auto-delete timers</li>
+      </ul>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-card-head">
+        <div class="feature-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 4 6v6c0 5 3.5 8 8 10 4.5-2 8-5 8-10V6l-8-4Z"/><path d="M9 12l2 2 4-4"/></svg></div>
+        <h4>Account security</h4>
+      </div>
+      <ul>
+        <li>One active device at a time, with a sign-in activity log</li>
+        <li>Optional approval required for sign-ins on a new device</li>
+        <li>App lock with confirmation + hint + reset via email or password</li>
+        <li>Password reset via email link</li>
+        <li>Deactivate, export, or permanently delete your account</li>
+      </ul>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-card-head">
+        <div class="feature-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg></div>
+        <h4>Trust &amp; safety</h4>
+      </div>
+      <ul>
+        <li>Report a specific rule violation against a contact</li>
+        <li>Appeals process if your account is suspended</li>
+        <li>In-app Community Guidelines explaining the actual rules</li>
+        <li>Help Centre with searchable FAQ, on login and inside the app</li>
+      </ul>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-card-head">
+        <div class="feature-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="13.5" cy="6.5" r="2.5"/><circle cx="19" cy="17" r="2.5"/><circle cx="6" cy="12" r="2.5"/><path d="M13.5 9v3l4 3M11 12l-3-1"/></svg></div>
+        <h4>Appearance</h4>
+      </div>
+      <ul>
+        <li>16 accent colors</li>
+        <li>8 wallpaper presets, or upload your own photo</li>
+        <li>Custom app logo — replaces the default NWisp branding</li>
+        <li>Light, dark, and system theme</li>
+      </ul>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-card-head">
+        <div class="feature-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M4 12h2m12 0h2M12 4v2m0 12v2M6.3 6.3l1.4 1.4m8.6 8.6 1.4 1.4M17.7 6.3l-1.4 1.4M7.7 16.3l-1.4 1.4"/></svg></div>
+        <h4>Media</h4>
+      </div>
+      <ul>
+        <li>Swipeable, pinch-to-zoom media viewer for photos &amp; videos</li>
+        <li>Save shared media to your device</li>
+        <li>Documents and video shared up to 20MB</li>
+      </ul>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-card-head">
+        <div class="feature-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10Z"/></svg></div>
+        <h4>Identity &amp; contacts</h4>
+      </div>
+      <ul>
+        <li>Username-based public identity; email kept private</li>
+        <li>Contact requests instead of open discovery</li>
+        <li>Add by username or by scanning a QR code</li>
+        <li>No phone number required to sign up</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================================ SCOPE -->
+<section id="scope" class="scope">
+  <p class="section-eyebrow">What's not here</p>
+  <h2 class="section-title">Deliberately left out — this isn't Instagram or WhatsApp</h2>
+  <p class="scope-copy">
+    NWisp is a messaging app, not a social network. These are things it
+    intentionally does not do, so it doesn't quietly turn into the platforms
+    it's trying to be an alternative to.
+  </p>
+  <div class="chip-row">
+    <span class="chip">No public feed</span>
+    <span class="chip">No permanent posts</span>
+    <span class="chip">No Reels-style content</span>
+    <span class="chip">No livestreaming</span>
+    <span class="chip">No voice or video calls yet (voice messages only)</span>
+    <span class="chip">No ads</span>
+    <span class="chip">No premium tier</span>
+    <span class="chip">No unlimited cloud backup</span>
+    <span class="chip">No web or desktop app yet</span>
+  </div>
+</section>
+
+<!-- ============================================================ STATUS -->
+<section id="status" class="status">
+  <p class="section-eyebrow">Right now</p>
+  <h2 class="section-title">Where the build actually stands</h2>
+  <p class="status-copy">
+    NWisp is built and developed by one person, in the open, with no funding
+    and no team. What's listed under Features above is real and already
+    working in the app — this is just what's left before a first public build.
+  </p>
+  <p class="status-asof">Last reviewed: September 2026</p>
+  <div class="status-track">
+    <div class="status-item is-done"><span class="status-dot"></span><span class="status-text">Accounts, contacts, 1:1 &amp; group chat</span></div>
+    <div class="status-item is-done"><span class="status-dot"></span><span class="status-text">Signal Protocol end-to-end encryption</span></div>
+    <div class="status-item is-done"><span class="status-dot"></span><span class="status-text">Stories with viewer circles</span></div>
+    <div class="status-item is-done"><span class="status-dot"></span><span class="status-text">Account &amp; device security tools</span></div>
+    <div class="status-item is-done"><span class="status-dot"></span><span class="status-text">Reporting, appeals &amp; guidelines</span></div>
+    <div class="status-item is-progress"><span class="status-dot"></span><span class="status-text">Push notification reliability</span></div>
+    <div class="status-item is-progress"><span class="status-dot"></span><span class="status-text">Server-side rule hardening</span></div>
+    <div class="status-item is-pending"><span class="status-dot"></span><span class="status-text">First public build</span></div>
+  </div>
+</section>
+
+<!-- ============================================================ LATEST UPDATES PREVIEW -->
+<section class="updates-preview">
+  <p class="section-eyebrow">Changelog</p>
+  <h2 class="section-title">Latest update</h2>
+  <div class="updates-preview-panel" id="updatesPreviewPanel">
+    <!-- filled by script from assets/updates-data.js -->
+  </div>
+  <div style="margin-top:20px;">
+    <a href="updates.html" class="btn btn-ghost btn-sm">See all updates</a>
+  </div>
+</section>
+
+<!-- ============================================================ FAQ -->
+<section id="faq" class="faq">
+  <p class="section-eyebrow">Questions</p>
+  <h2 class="section-title">Frequently asked</h2>
+  <div class="faq-list">
+
+    <details class="faq-item">
+      <summary>Is NWisp actually end-to-end encrypted, or is that marketing?</summary>
+      <p>It's real. Every chat runs the Signal Protocol — X3DH for the initial key exchange, then the Double Ratchet for every message after that — meaning encryption keys keep changing and the server relaying messages never has access to plaintext.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Does NWisp have group chats now?</summary>
+      <p>Yes. You can create a group, add contacts directly or invite people who need to accept, set admins, and restrict sending to admins only if you want. Every group message is still end-to-end encrypted to each member.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Can I make voice or video calls?</summary>
+      <p>Not yet — that's still on the roadmap. You can record and send voice messages in any chat right now, but live calls aren't built.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>How do I know I'm really talking to the right person?</summary>
+      <p>Each conversation has a safety number you and the other person can compare through a separate channel (a call, in person, etc.). If it matches on both ends, no one is intercepting the conversation.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>What happens to my messages after 24 hours?</summary>
+      <p>They're removed from the relay server, whether they were delivered or not. There's no permanent server-side chat history. Anything you want to keep needs to stay on your device.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Do I need a phone number to sign up?</summary>
+      <p>No. Sign-up only needs a username, an email address (kept private), and a password. Your public identity to other people is just your username.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>What if someone gets access to my phone?</summary>
+      <p>App lock, hidden chats with their own code and optional PIN, and the fact that your account can only be signed in on one device at a time all help here — plus screenshot and screen-recording protection inside chats, which is on by default.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Is it free?</summary>
+      <p>Yes, completely. No premium tier, no ads, no paid unlocks. That may change if hosting costs become unsustainable, but there's no plan for that right now.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Is the code open source?</summary>
+      <p>Not right now. It may open up later, but the current priority is finishing the app itself.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Who's building this?</summary>
+      <p>One person, as an independent project — see the Contact section below for how to reach out.</p>
+    </details>
+
+  </div>
+</section>
+
+<!-- ============================================================ CONTACT -->
+<section id="contact" class="contact">
+  <p class="section-eyebrow">Get in touch</p>
+  <h2 class="section-title">Questions, feedback, or found a bug?</h2>
+
+  <div class="contact-panel">
+    <div class="contact-identity">
+      <div class="contact-avatar">NW</div>
+      <div>
+        <span class="contact-name">Nightwalker</span>
+        <span class="contact-role">Building NWisp, solo</span>
       </div>
     </div>
-  </section>
 
-  <!-- HONEST SCOPE -->
-  <section class="scope">
-    <p class="section-eyebrow">Built honestly, not oversold</p>
-    <h2 class="section-title">What's deliberately not here yet.</h2>
-    <p class="scope-copy">v1 is free, with nothing behind a paywall — the goal is a small, reliable, private app before it's a big one.</p>
-    <div class="chip-row">
-      <span class="chip">No group chats yet</span>
-      <span class="chip">No voice or video calls yet</span>
-      <span class="chip">No web or desktop app yet</span>
-      <span class="chip">No feed</span>
-      <span class="chip">No permanent posts</span>
-      <span class="chip">No reels</span>
-      <span class="chip">No livestreaming</span>
-      <span class="chip">No ads</span>
-      <span class="chip">No premium tier</span>
+    <p class="contact-copy">
+      NWisp is built by one person. If you've got feedback, found a bug, or just
+      want to know more about how something works, reach out directly —
+      every message gets read.
+    </p>
+
+    <div class="contact-list">
+      <a class="contact-row" href="mailto:rinshan602@gmail.com">
+        <span class="contact-row-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span>
+        <span class="contact-row-text">
+          <span class="contact-label">Email</span>
+          <span class="contact-value">rinshan602@gmail.com</span>
+        </span>
+        <span class="contact-row-arrow">↗</span>
+      </a>
+      <a class="contact-row" href="https://t.me/nightwalker_ofc0" target="_blank" rel="noopener">
+        <span class="contact-row-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 3 2 11l6 2 2 6 3-4 5 4Z"/></svg></span>
+        <span class="contact-row-text">
+          <span class="contact-label">Telegram</span>
+          <span class="contact-value">@nightwalker_ofc0</span>
+        </span>
+        <span class="contact-row-arrow">↗</span>
+      </a>
+      <a class="contact-row" href="https://instagram.com/nightwalker.ofc" target="_blank" rel="noopener">
+        <span class="contact-row-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></span>
+        <span class="contact-row-text">
+          <span class="contact-label">Instagram</span>
+          <span class="contact-value">@nightwalker.ofc</span>
+        </span>
+        <span class="contact-row-arrow">↗</span>
+      </a>
+      <a class="contact-row" href="https://github.com/NIGHTWALKEROFC" target="_blank" rel="noopener">
+        <span class="contact-row-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-4 1-4-2-6-2m12 4v-3.5c0-1 .1-1.4-.5-2 2.7-.3 5.5-1.3 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.3-.4-4.1 1.6a13.9 13.9 0 0 0-7 0c-2.8-2-4.1-1.6-4.1-1.6a4.2 4.2 0 0 0-.1 3.2 4.6 4.6 0 0 0-1.3 3.2c0 4.6 2.8 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></span>
+        <span class="contact-row-text">
+          <span class="contact-label">GitHub</span>
+          <span class="contact-value">NIGHTWALKEROFC</span>
+        </span>
+        <span class="contact-row-arrow">↗</span>
+      </a>
     </div>
-  </section>
 
-  <!-- STATUS -->
-  <section id="status" class="status">
-    <p class="section-eyebrow">Right now</p>
-    <h2 class="section-title">Where the build actually stands.</h2>
-    <p class="status-copy">NWisp is being built in the open by one developer. Core chat and Stories work end to end. What's left before a real release is mostly the unglamorous stuff: notification delivery and tightening the server-side rules. There's no fixed release date yet, and that's said here on purpose instead of promising one.</p>
-    <p class="status-asof">Status as of August 2026</p>
-    <div class="status-track">
-      <div class="status-item is-done">
-        <span class="status-dot"></span>
-        <span class="status-text">Accounts, contacts, and 1:1 chat</span>
-      </div>
-      <div class="status-item is-done">
-        <span class="status-dot"></span>
-        <span class="status-text">Themes, PIN lock, disappearing-message toggle</span>
-      </div>
-      <div class="status-item is-progress">
-        <span class="status-dot"></span>
-        <span class="status-text">Push notifications</span>
-      </div>
-      <div class="status-item is-progress">
-        <span class="status-dot"></span>
-        <span class="status-text">Server-side security rules</span>
-      </div>
-      <div class="status-item is-pending">
-        <span class="status-dot"></span>
-        <span class="status-text">First public build</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- FAQ -->
-  <section id="faq" class="faq">
-    <p class="section-eyebrow">Questions</p>
-    <h2 class="section-title">Anything unclear? Probably answered here.</h2>
-
-    <div class="faq-list">
-      <details class="faq-item">
-        <summary>Is NWisp open source?</summary>
-        <p>Not right now — the code is in a private repository while the app is under active, early development. That may change later.</p>
-      </details>
-      <details class="faq-item">
-        <summary>Why build another chat app instead of using Signal or Telegram?</summary>
-        <p>Both are excellent, but for different goals. NWisp is built specifically around username-first identity, messages kept encrypted on your device instead of a server, and an optional disappearing-messages toggle for chats you want to clear themselves — not trying to replace either.</p>
-      </details>
-      <details class="faq-item">
-        <summary>Where are my messages actually stored?</summary>
-        <p>On your device and the other person's, encrypted at rest — that's the copy that stays. The server only ever holds a message briefly to deliver it, then deletes its copy; it isn't a backup or an archive. If you turn on disappearing messages for a chat, the on-device copies clear too once your timer runs out.</p>
-      </details>
-      <details class="faq-item">
-        <summary>Are messages deleted automatically?</summary>
-        <p>Not unless you turn it on. By default, a conversation stays on your device the way you'd expect from any chat app — encrypted, and there until you delete it. Disappearing messages is an opt-in setting per conversation, not the default.</p>
-      </details>
-      <details class="faq-item">
-        <summary>Can you, or the server, read my messages?</summary>
-        <p>No — messages are encrypted on your device before they're sent, using established cryptographic protocols, and decrypted only on the receiving device. The server relays encrypted data; it isn't designed to read the content.</p>
-      </details>
-      <details class="faq-item">
-        <summary>Do I need to give my phone number to sign up?</summary>
-        <p>No — sign-up only needs an email and a username. There's no phone number field at all, and your email is never shown on your profile.</p>
-      </details>
-      <details class="faq-item">
-        <summary>Does NWisp have group chats or calls?</summary>
-        <p>Not yet. v1 is 1:1 chat and Stories only — no group messaging and no voice or video calls. Either might come later, but there's no promise or timeline for that right now.</p>
-      </details>
-      <details class="faq-item">
-        <summary>Is there an iOS version planned?</summary>
-        <p>Android is the only target for now. iOS isn't ruled out for later, but there's no timeline for it.</p>
-      </details>
-      <details class="faq-item">
-        <summary>Will NWisp always be free?</summary>
-        <p>Yes for v1 — free, no ads, no premium tier, nothing behind a paywall.</p>
-      </details>
-      <details class="faq-item">
-        <summary>I have a question that's not here — what do I do?</summary>
-        <p>Just ask directly. Contact details are right below this section.</p>
-      </details>
-    </div>
-  </section>
-
-  <!-- DEVELOPER / CONTACT -->
-  <section id="contact" class="contact">
-    <p class="section-eyebrow">Get in touch</p>
-    <h2 class="section-title">Mohammed Rinshan — NightWalker</h2>
-
-    <div class="contact-panel">
-      <div class="contact-identity">
-        <span class="contact-avatar" aria-hidden="true">NW</span>
-        <div>
-          <span class="contact-name">Mohammed Rinshan</span>
-          <span class="contact-role">Independent Developer · Malappuram, Kerala</span>
-        </div>
-      </div>
-      <p class="contact-copy">Building privacy-focused apps and security tools. NWisp is the current project — see more at the <a href="https://nightwalkerofc.github.io/" target="_blank" rel="noopener">portfolio site</a>, or reach out below for early access, collaboration, or questions.</p>
-
-      <div class="contact-cta-row">
-        <a class="btn btn-primary" href="mailto:rinshan602@gmail.com?subject=Notify%20me%20when%20NWisp%20launches&body=Hey%2C%20I%27d%20like%20to%20be%20notified%20when%20NWisp%20is%20ready.">Get notified at launch</a>
-      </div>
-      <p class="notify-note">Opens a pre-filled email — nothing is submitted automatically. Release updates are also posted on Instagram first.</p>
-
-      <div class="contact-divider"></div>
-
-      <div class="contact-list">
-        <a class="contact-row" href="mailto:rinshan602@gmail.com" target="_blank" rel="noopener">
-          <span class="contact-row-icon"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="m4 6.5 8 6 8-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>
-          <span class="contact-row-text"><span class="contact-label">Email</span><span class="contact-value">rinshan602@gmail.com</span></span>
-          <span class="contact-row-arrow" aria-hidden="true">↗</span>
-        </a>
-        <a class="contact-row" href="https://www.instagram.com/nightwalker.ofc" target="_blank" rel="noopener">
-          <span class="contact-row-icon"><svg viewBox="0 0 24 24" fill="none"><rect x="3.5" y="3.5" width="17" height="17" rx="4.5" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.6"/><circle cx="17" cy="7" r="1.1" fill="currentColor"/></svg></span>
-          <span class="contact-row-text"><span class="contact-label">Instagram · updates</span><span class="contact-value">@nightwalker.ofc</span></span>
-          <span class="contact-row-arrow" aria-hidden="true">↗</span>
-        </a>
-        <a class="contact-row" href="https://t.me/nightwalker_ofc" target="_blank" rel="noopener">
-          <span class="contact-row-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M21 4 3 11.2l6 2.2M21 4l-3.2 16-6.8-5.6M21 4l-11.5 9.4M9 13.4v5.4l3-3.3" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/></svg></span>
-          <span class="contact-row-text"><span class="contact-label">Telegram · DM</span><span class="contact-value">@nightwalker_ofc</span></span>
-          <span class="contact-row-arrow" aria-hidden="true">↗</span>
-        </a>
-        <a class="contact-row" href="https://t.me/nightwalker_ofc0" target="_blank" rel="noopener">
-          <span class="contact-row-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M21 4 3 11.2l6 2.2M21 4l-3.2 16-6.8-5.6M21 4l-11.5 9.4M9 13.4v5.4l3-3.3" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/></svg></span>
-          <span class="contact-row-text"><span class="contact-label">Telegram · Channel</span><span class="contact-value">@nightwalker_ofc0</span></span>
-          <span class="contact-row-arrow" aria-hidden="true">↗</span>
-        </a>
-        <a class="contact-row" href="https://github.com/NIGHTWALKEROFC" target="_blank" rel="noopener">
-          <span class="contact-row-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2.2a9.8 9.8 0 0 0-3.1 19.1c.5.1.7-.2.7-.5v-1.8c-2.7.6-3.3-1.3-3.3-1.3-.4-1.1-1.1-1.4-1.1-1.4-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.6 2.4 1.1 3 .8.1-.7.4-1.1.6-1.4-2.2-.3-4.5-1.1-4.5-4.9 0-1.1.4-1.9 1-2.6-.1-.3-.4-1.4.1-2.9 0 0 .8-.3 2.8 1a9.4 9.4 0 0 1 5 0c1.9-1.3 2.7-1 2.7-1 .6 1.5.2 2.6.1 2.9.6.7 1 1.6 1 2.6 0 3.8-2.3 4.6-4.5 4.9.4.3.7.9.7 1.9v2.8c0 .3.2.6.7.5A9.8 9.8 0 0 0 12 2.2Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg></span>
-          <span class="contact-row-text"><span class="contact-label">GitHub</span><span class="contact-value">@NIGHTWALKEROFC</span></span>
-          <span class="contact-row-arrow" aria-hidden="true">↗</span>
-        </a>
-        <a class="contact-row" href="https://nightwalkerofc.github.io/" target="_blank" rel="noopener">
-          <span class="contact-row-icon"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9.2" stroke="currentColor" stroke-width="1.6"/><path d="M2.8 12h18.4M12 2.8c2.4 2.5 3.7 5.7 3.7 9.2s-1.3 6.7-3.7 9.2c-2.4-2.5-3.7-5.7-3.7-9.2S9.6 5.3 12 2.8Z" stroke="currentColor" stroke-width="1.6"/></svg></span>
-          <span class="contact-row-text"><span class="contact-label">Portfolio</span><span class="contact-value">nightwalkerofc.github.io</span></span>
-          <span class="contact-row-arrow" aria-hidden="true">↗</span>
-        </a>
-      </div>
-    </div>
-  </section>
-
-</main>
+    <div class="contact-divider"></div>
+    <p class="notify-note">Want to know when NWisp is ready to try? Reach out on any of the above and ask to be notified — there's no mailing list yet, so this is the only way.</p>
+  </div>
+</section>
 
 <footer class="footer">
-  <p>NWisp — your conversations, your privacy.</p>
-  <p class="footer-sub">Built by Mohammed Rinshan (NightWalker) · Malappuram, Kerala · 2026</p>
-  <p class="footer-sub">This site uses no cookies, no analytics, and no trackers of any kind.</p>
+  <p>NWisp — Private conversations. Temporary presence.</p>
+  <p class="footer-sub">Built honestly, not oversold. An independent project, not affiliated with any other messaging app.</p>
+  <div class="footer-links">
+    <a href="updates.html">Updates</a>
+    <a href="#faq">FAQ</a>
+    <a href="#contact">Contact</a>
+  </div>
 </footer>
 
-<!-- APP UPDATES — off-flow panel, opened only from the nav link -->
-<div class="updates-overlay" id="updates-overlay">
-  <div class="updates-panel" role="dialog" aria-modal="true" aria-labelledby="updates-title">
-    <button class="updates-close" id="updates-close" aria-label="Close">
-      <svg viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-    </button>
-    <div class="updates-icon">
-      <svg viewBox="0 0 24 24" fill="none"><path d="M12 2.8c2.4 2.5 3.7 5.7 3.7 9.2s-1.3 6.7-3.7 9.2c-2.4-2.5-3.7-5.7-3.7-9.2S9.6 5.3 12 2.8Z" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="9.2" stroke="currentColor" stroke-width="1.6"/></svg>
-    </div>
-    <p class="section-eyebrow">App updates</p>
-    <h3 id="updates-title" class="updates-title">No new updates right now</h3>
-    <p class="updates-body">Release notes and build announcements will be posted here as soon as there's something worth sharing. Check back later, or follow along on GitHub for the day-to-day progress.</p>
-  </div>
-</div>
-
+<script src="assets/updates-data.js"></script>
 <script>
-  (function(){
-    var trigger = document.getElementById('updates-trigger');
-    var overlay = document.getElementById('updates-overlay');
-    var closeBtn = document.getElementById('updates-close');
-    var navToggle = document.getElementById('nav-toggle');
-    var navLinks = document.getElementById('nav-links');
+  // mobile nav toggle
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', () => {
+    const open = navLinks.classList.toggle('is-open');
+    navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    navLinks.classList.remove('is-open');
+    navToggle.setAttribute('aria-expanded', 'false');
+  }));
 
-    function openOverlay(e){
-      if(e) e.preventDefault();
-      overlay.classList.add('is-open');
-      navLinks.classList.remove('is-open');
-      navToggle.setAttribute('aria-expanded', 'false');
+  // render latest update preview from shared data file
+  (function renderLatestUpdate(){
+    const panel = document.getElementById('updatesPreviewPanel');
+    const updates = window.NWISP_UPDATES || [];
+    if (!updates.length) {
+      panel.outerHTML = '<div class="empty-state">No updates posted yet.</div>';
+      return;
     }
-    function closeOverlay(){
-      overlay.classList.remove('is-open');
-    }
-
-    trigger.addEventListener('click', openOverlay);
-    closeBtn.addEventListener('click', closeOverlay);
-    overlay.addEventListener('click', function(e){
-      if(e.target === overlay) closeOverlay();
-    });
-    document.addEventListener('keydown', function(e){
-      if(e.key === 'Escape'){ closeOverlay(); closeMenu(); }
-    });
-
-    function closeMenu(){
-      navLinks.classList.remove('is-open');
-      navToggle.setAttribute('aria-expanded', 'false');
-    }
-    navToggle.addEventListener('click', function(){
-      var isOpen = navLinks.classList.toggle('is-open');
-      navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-    });
-    navLinks.querySelectorAll('a').forEach(function(a){
-      a.addEventListener('click', function(e){
-        if(a.id !== 'updates-trigger') closeMenu();
-      });
-    });
+    const u = updates[0];
+    const pillClass = u.tag === 'major' ? 'tag-major' : (u.tag === 'added' ? 'tag-added' : 'tag-changed');
+    const mainPoints = u.points.slice(0, 5).map(p => `<li>${p.text}</li>`).join('');
+    panel.innerHTML = `
+      <div>
+        <div class="updates-preview-meta">
+          <span class="tag-pill ${pillClass}">${u.tagLabel}</span>
+          <span class="entry-date">${u.date}</span>
+        </div>
+        <h3 class="updates-preview-title">${u.title}</h3>
+        <p class="updates-preview-intro">${u.intro}</p>
+        <a class="update-entry-more" href="update.html?id=${encodeURIComponent(u.id)}">
+          Read the full update
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+      <ul class="updates-preview-points">${mainPoints}</ul>
+    `;
   })();
 </script>
-
 </body>
 </html>
