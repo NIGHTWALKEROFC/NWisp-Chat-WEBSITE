@@ -21,7 +21,7 @@
 window.NWISP_UPDATES = [
   {
     id: "search-privacy-tools-2026-09b",
-    date: "September 2026",
+    date: "September 15, 2026",
     tag: "major",
     tagLabel: "Major update",
     title: "Search, a panic PIN, self-destructing media, and a lot more privacy control",
@@ -109,7 +109,7 @@ window.NWISP_UPDATES = [
   },
   {
     id: "signal-protocol-groups-2026-09",
-    date: "September 2026",
+    date: "September 9, 2026",
     tag: "major",
     tagLabel: "Major update",
     title: "Group chats, real forward-secret encryption, and a lot more control",
