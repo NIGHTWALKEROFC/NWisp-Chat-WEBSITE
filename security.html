@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Security — NWisp Chat</title>
+<meta name="description" content="How to report a security issue in NWisp Chat, and a record of vulnerabilities found and fixed.">
+<meta property="og:title" content="Security — NWisp Chat">
+<meta property="og:image" content="og-image.png">
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+<div class="grain"></div>
+
+<nav class="nav">
+  <a href="index.html" class="nav-brand">
+    <span class="brand-mark"></span>
+    NWisp Chat
+  </a>
+  <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false" id="navToggle">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-links" id="navLinks">
+    <a href="index.html#concept">Concept</a>
+    <a href="index.html#features">Features</a>
+    <a href="index.html#scope">Scope</a>
+    <a href="index.html#status">Status</a>
+    <a href="updates.html">Updates</a>
+    <a href="security.html" class="is-active">Security</a>
+    <a href="index.html#faq">FAQ</a>
+    <a href="index.html#contact">Contact</a>
+  </div>
+  <a href="index.html#contact" class="nav-cta">Get in touch</a>
+</nav>
+
+<div class="breadcrumb-bar">
+  <div class="breadcrumb">
+    <a href="index.html">Home</a>
+    <span class="crumb-sep">/</span>
+    <span class="crumb-current">Security</span>
+  </div>
+</div>
+
+<div class="page-header">
+  <p class="section-eyebrow">Security</p>
+  <h1 class="section-title">Found something that puts someone's privacy at risk?</h1>
+  <p class="page-header-copy">
+    This page is separate from the regular Updates page on purpose — Updates is for
+    new features, this page is only for actual security problems: what was found,
+    how it was fixed, and credit to whoever reported it.
+  </p>
+</div>
+
+<!-- ============================================================ HOW TO REPORT -->
+<section id="report">
+  <p class="section-eyebrow">Report it privately first</p>
+  <h2 class="section-title">Please don't post it publicly before reaching out</h2>
+
+  <div class="contact-panel">
+    <p class="contact-copy" style="margin-bottom:0;">
+      If you find a bug that could put someone's messages, account, or privacy at
+      risk, please email it to me directly before posting about it anywhere public —
+      social media, forums, group chats, anywhere. That gap gives me a real chance to
+      fix it before anyone else can use it against someone. Once it's fixed, it'll be
+      listed below along with credit to you for finding it (or left anonymous, if
+      you'd rather).
+    </p>
+
+    <div class="disclosure-panel-row">
+      <a class="btn btn-primary btn-sm" href="mailto:rinshan602@gmail.com?subject=Security%20report%20-%20NWisp%20Chat">
+        Email a security report
+      </a>
+      <a class="btn btn-ghost btn-sm" href="https://t.me/nightwalker_ofc0" target="_blank" rel="noopener">
+        Or message on Telegram
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ FIXED ISSUES -->
+<section id="fixed">
+  <p class="section-eyebrow">Track record</p>
+  <h2 class="section-title">Vulnerabilities found &amp; fixed</h2>
+  <div class="updates-list" id="securityList">
+    <!-- rendered by script from assets/security-data.js -->
+  </div>
+</section>
+
+<footer class="footer">
+  <p>NWisp Chat — Your conversations. Your privacy.</p>
+  <p class="footer-sub">Built honestly, not oversold.</p>
+  <div class="footer-links">
+    <a href="index.html">Home</a>
+    <a href="updates.html">Updates</a>
+    <a href="index.html#contact">Contact</a>
+  </div>
+</footer>
+
+<script src="assets/security-data.js"></script>
+<script>
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', () => {
+    const open = navLinks.classList.toggle('is-open');
+    navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+
+  (function renderSecurityList(){
+    const list = document.getElementById('securityList');
+    const issues = window.NWISP_SECURITY_ISSUES || [];
+    if (!issues.length) {
+      list.innerHTML = '<div class="empty-state">Nothing reported yet. Anything found and fixed will be listed here, along with credit to whoever reported it.</div>';
+      return;
+    }
+    list.innerHTML = issues.map(i => {
+      const sevClass = 'tag-' + (i.severity || 'medium');
+      const sevLabel = (i.severity || 'medium').charAt(0).toUpperCase() + (i.severity || 'medium').slice(1);
+      const dateLine = i.dateFixed
+        ? `Found ${i.dateFound} — fixed ${i.dateFixed}`
+        : `Found ${i.dateFound} — fix in progress`;
+      const creditLine = i.credit
+        ? `Reported by <strong>${i.credit.link ? `<a href="${i.credit.link}" target="_blank" rel="noopener">${i.credit.name}</a>` : i.credit.name}</strong>`
+        : 'Reported anonymously';
+      return `
+        <article class="update-entry-card security-entry-card">
+          <div class="update-entry-top">
+            <span class="tag-pill ${sevClass}">${sevLabel} severity</span>
+            <span class="entry-date">${dateLine}</span>
+          </div>
+          <h2 class="update-entry-title">${i.title}</h2>
+          <p class="update-entry-intro">${i.description}</p>
+          <ul class="update-entry-points">
+            <li class="update-point-changed">${i.fixSummary}</li>
+          </ul>
+          <div class="credit-line">${creditLine}</div>
+        </article>
+      `;
+    }).join('');
+  })();
+</script>
+</body>
+</html>
