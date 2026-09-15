@@ -20,6 +20,94 @@
  */
 window.NWISP_UPDATES = [
   {
+    id: "search-privacy-tools-2026-10",
+    date: "October 2026",
+    tag: "major",
+    tagLabel: "Major update",
+    title: "Search, a panic PIN, self-destructing media, and a lot more privacy control",
+    intro:
+      "This update is almost entirely about finding things faster and controlling what other people can ever see — a real panic PIN, view-once photos and videos, link-safety warnings, and search across every chat at once.",
+    points: [
+      { type: "added", text: "Global search — find any chat, group, or message across the whole app in one place" },
+      { type: "added", text: "Starred messages — a private bookmark list across every conversation, visible only to you" },
+      { type: "added", text: "Chat folders — organize your chat list into your own custom groups" },
+      { type: "added", text: "View-once photos and videos — open once, then gone, with no save option" },
+      { type: "added", text: "Link safety warnings — on-device heuristic check before you open a suspicious link" },
+      { type: "added", text: "Mute by keyword — globally or per chat, without muting the whole conversation" },
+      { type: "added", text: "Duress PIN — a second, separate PIN that opens a harmless decoy screen instead of your real chats" },
+      { type: "added", text: "Biometric unlock — Face ID / fingerprint as a shortcut for your app-lock PIN" },
+      { type: "added", text: "\"Clear on exit\" mode — a chat wipes its local copy on this device the moment you leave it" },
+      { type: "added", text: "Inactivity auto-wipe — automatically clear a chat's local copy after it's gone untouched, on or off globally and per chat" },
+      { type: "added", text: "Per-chat wallpapers — a different look for individual conversations, separate from your app-wide theme" },
+      { type: "added", text: "Per-chat media browser — every photo, video, voice message, and link in a chat, in one tabbed view" },
+      { type: "added", text: "Report a group — flag a group itself, not just one member of it" },
+      { type: "changed", text: "Reporting is now available for both individual contacts and whole groups" },
+    ],
+    detail: {
+      added: [
+        {
+          title: "Global search",
+          body: "Search across every chat and group at once — matches conversation and group names, and the actual text of messages, so you can jump straight to a result instead of hunting through your chat list. Nothing here is server-side; it searches what's already decrypted and stored on your device."
+        },
+        {
+          title: "Starred messages",
+          body: "Star any message in any chat or group to save it to a personal list you can revisit any time. Unlike pinning, starring is completely private to you — it's never visible to anyone else in the conversation, and never synced anywhere."
+        },
+        {
+          title: "Chat folders",
+          body: "Create your own named folders and add any chat to as many of them as you want — a chat isn't locked into one folder, folders are just custom filters over your existing chat list. Purely local to your device, like muted or archived chats already were."
+        },
+        {
+          title: "View-once media",
+          body: "Send a photo or video that can only be opened once. It fills the screen on its own, with no gallery to swipe through and no save-to-device option — closing it deletes it for good. Screenshot and screen-recording protection is active the entire time it's open."
+        },
+        {
+          title: "Link safety warnings",
+          body: "Before you open a link someone sends you, NWisp Chat checks it for common red flags — raw IP addresses instead of a real domain, a login-sounding subdomain attached to an unrelated site, lookalike characters, and known link-shortener domains that hide where they actually lead. This runs entirely on your device — no link is ever sent anywhere to be checked. It's a heuristic warning to make you pause, not a guarantee every bad link gets caught."
+        },
+        {
+          title: "Mute by keyword",
+          body: "Mute notifications that contain specific words, either across every chat or just one conversation. Because the server never sees your message text, this only works once a message actually reaches and decrypts on your device — a notification that arrives while the app is fully closed still shows normally, the same real limit that already applies elsewhere in NWisp Chat's zero-knowledge design."
+        },
+        {
+          title: "Duress PIN",
+          body: "Set a second PIN, completely separate from your real one, on the same lock screen. Type it under pressure and you land on a decoy screen that looks like a normal, empty, freshly-installed copy of the app — no real chats, no way back to your actual account visible on screen. To get back to your real chats, close and reopen the app and enter your real PIN. Setting one up requires your real PIN first, and the two can never be the same."
+        },
+        {
+          title: "Biometric unlock",
+          body: "If your device has Face ID or a fingerprint sensor set up, you can use it as a faster way past your app lock. It's purely a convenience layer — your real PIN is still what's actually stored and verified, biometrics just ask the phone \"is this the owner?\" and accept a yes the same way a correct PIN would be accepted."
+        },
+        {
+          title: "\"Clear on exit\" mode",
+          body: "Turn this on for a chat and your device wipes its local copy of that conversation the moment you close it — every time. Either person in a 1:1 chat can turn it on or off. It only affects your own device; it never touches the relay and never deletes anything on the other person's phone."
+        },
+        {
+          title: "Inactivity auto-wipe",
+          body: "Automatically clear a chat's local copy after it's gone untouched for a set number of months. There's a global default you can turn on in Settings, and any individual chat can override it — opting a specific chat in even if the default is off, or opting it out even if the default is on. Entirely local to your device, same as clear-on-exit."
+        },
+        {
+          title: "Per-chat wallpapers",
+          body: "Pick a background for one specific conversation, separate from your overall app theme. It's a personal, on-device choice — the other person in a 1:1 chat never sees or is affected by it."
+        },
+        {
+          title: "Per-chat media browser",
+          body: "Open a chat or group's info screen to see every photo and video, every voice message, and every link ever shared in that conversation, sorted into tabs. View-once media doesn't appear here, since it's designed to disappear after one viewing. Opening a link from this browser gets the same safety warning as tapping it directly in the chat."
+        },
+        {
+          title: "Report a group",
+          body: "Alongside reporting an individual contact, you can now report a group itself — for cases where it's the group's name, description, or shared content that breaks a rule, not one specific member."
+        }
+      ],
+      changed: [
+        {
+          title: "Reporting",
+          body: "The existing report-and-appeal system now covers groups as well as individual people, using the same rule categories and review process."
+        }
+      ],
+      removed: []
+    }
+  },
+  {
     id: "signal-protocol-groups-2026-09",
     date: "September 2026",
     tag: "major",
