@@ -158,6 +158,19 @@
 
     <div class="feature-card">
       <div class="feature-card-head">
+        <div class="feature-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></div>
+        <h4>Search &amp; organize</h4>
+      </div>
+      <ul>
+        <li>Global search across every chat, group, and message at once</li>
+        <li>Starred messages — a private bookmark list, visible only to you</li>
+        <li>Chat folders — sort your chat list into your own custom groups</li>
+        <li>Per-chat media browser — every photo, video, voice note &amp; link in one place</li>
+      </ul>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-card-head">
         <div class="feature-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></div>
         <h4>Privacy controls</h4>
       </div>
@@ -167,6 +180,21 @@
         <li>Blocking enforced at the message-delivery layer</li>
         <li>Screenshot &amp; screen-recording protection, on by default</li>
         <li>Per-chat and app-wide auto-delete timers</li>
+        <li>Mute by keyword, globally or for just one chat</li>
+        <li>On-device warnings before you open a suspicious link</li>
+      </ul>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-card-head">
+        <div class="feature-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg></div>
+        <h4>Self-destructing &amp; panic tools</h4>
+      </div>
+      <ul>
+        <li>View-once photos &amp; videos — open once, then gone, no saving</li>
+        <li>"Clear on exit" — a chat wipes its local copy the moment you leave it</li>
+        <li>Inactivity auto-wipe — clear an untouched chat after N months, on by default off, overridable per chat</li>
+        <li>Duress PIN — opens a harmless decoy screen instead of your real chats</li>
       </ul>
     </div>
 
@@ -179,6 +207,7 @@
         <li>One active device at a time, with a sign-in activity log</li>
         <li>Optional approval required for sign-ins on a new device</li>
         <li>App lock with confirmation + hint + reset via email or password</li>
+        <li>Biometric unlock (Face ID / fingerprint) as a shortcut for app lock</li>
         <li>Password reset via email link</li>
         <li>Deactivate, export, or permanently delete your account</li>
       </ul>
@@ -190,7 +219,7 @@
         <h4>Trust &amp; safety</h4>
       </div>
       <ul>
-        <li>Report a specific rule violation against a contact</li>
+        <li>Report a specific rule violation against a contact, or against a group</li>
         <li>Appeals process if your account is suspended</li>
         <li>In-app Community Guidelines explaining the actual rules</li>
         <li>Help Centre with searchable FAQ, on login and inside the app</li>
@@ -205,6 +234,7 @@
       <ul>
         <li>16 accent colors</li>
         <li>8 wallpaper presets, or upload your own photo</li>
+        <li>Per-chat wallpapers — a different look for one conversation only</li>
         <li>Custom app logo — replaces the default NWisp Chat branding</li>
         <li>Light, dark, and system theme</li>
       </ul>
@@ -269,7 +299,7 @@
     and no team. What's listed under Features above is real and already
     working in the app — this is just what's left before a first public build.
   </p>
-  <p class="status-asof">Last reviewed: September 2026</p>
+  <p class="status-asof">Last reviewed: September 15, 2026</p>
   <div class="status-track">
     <div class="status-item is-done"><span class="status-dot"></span><span class="status-text">Accounts, contacts, 1:1 &amp; group chat</span></div>
     <div class="status-item is-done"><span class="status-dot"></span><span class="status-text">Signal Protocol end-to-end encryption</span></div>
@@ -307,7 +337,7 @@
 
     <details class="faq-item">
       <summary>Does NWisp Chat have group chats now?</summary>
-      <p>Yes. You can create a group, add contacts directly or invite people who need to accept, set admins, and restrict sending to admins only if you want. Every group message is still end-to-end encrypted to each member.</p>
+      <p>Yes. You can create a group, add contacts directly or invite people who need to accept, set admins, and restrict sending to admins only if you want. Every group message is still end-to-end encrypted to each member, and you can report either a specific person or the group itself if something goes wrong.</p>
     </details>
 
     <details class="faq-item">
@@ -321,8 +351,33 @@
     </details>
 
     <details class="faq-item">
+      <summary>There are a few different ways messages can disappear now — what's the difference?</summary>
+      <p>Four separate things, each doing a different job: <strong>(1) the 24-hour relay limit</strong> — every message is removed from the server after 24 hours no matter what, delivered or not, and this is always on and can't be turned off. <strong>(2) Auto-delete timers</strong> — an optional per-chat or app-wide setting that deletes a message from your device a set time after it's read. <strong>(3) "Clear on exit"</strong> — an optional per-chat toggle that wipes that chat's local copy on your device every time you close it. <strong>(4) Inactivity auto-wipe</strong> — an optional setting (global default or per-chat override) that clears a chat's local copy after it's gone untouched for a set number of months. Only #1 is mandatory; #2–4 are all off unless you turn them on, and they only ever affect your own device, never the other person's.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>What's the difference between starred and pinned messages?</summary>
+      <p>Pinning is shared — both people in the chat see the same pinned banner, capped at 3 messages. Starring is private — it's your own personal bookmark list across every chat and group, and no one else ever sees which messages you've starred.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Does searching my messages send them anywhere?</summary>
+      <p>No. Search only looks through messages already decrypted and stored on your own device — nothing is sent to a server to be searched, matching the same zero-knowledge design as everything else here.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>What's a duress PIN?</summary>
+      <p>A second PIN you can set up, completely separate from your real one. If you're ever forced to unlock your phone, typing the duress PIN instead of your real one opens a harmless decoy screen — an empty, normal-looking chat list with nothing real on it — instead of your actual conversations. To get back to your real chats afterward, close and reopen the app and enter your real PIN.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Does the link-safety warning block dangerous links for me?</summary>
+      <p>No — it warns, it doesn't block. It's a simple on-device check for common red flags (raw IP addresses, lookalike domains, known link-shortener services, etc.) meant to make you pause and look before tapping. It won't catch every bad link, and it may occasionally flag a safe one — it's a nudge, not a guarantee.</p>
+    </details>
+
+    <details class="faq-item">
       <summary>What happens to my messages after 24 hours?</summary>
-      <p>They're removed from the relay server, whether they were delivered or not. There's no permanent server-side chat history. Anything you want to keep needs to stay on your device.</p>
+      <p>They're removed from the relay server, whether they were delivered or not. There's no permanent server-side chat history. Anything you want to keep needs to stay on your device — see the question above for how that interacts with auto-delete, "clear on exit", and inactivity auto-wipe.</p>
     </details>
 
     <details class="faq-item">
@@ -332,7 +387,7 @@
 
     <details class="faq-item">
       <summary>What if someone gets access to my phone?</summary>
-      <p>App lock, hidden chats with their own code and optional PIN, and the fact that your account can only be signed in on one device at a time all help here — plus screenshot and screen-recording protection inside chats, which is on by default.</p>
+      <p>App lock (PIN or biometric), hidden chats with their own code and optional PIN, a duress PIN if you want a decoy screen instead of your real chats, and the fact that your account can only be signed in on one device at a time all help here — plus screenshot and screen-recording protection inside chats, which is on by default.</p>
     </details>
 
     <details class="faq-item">
