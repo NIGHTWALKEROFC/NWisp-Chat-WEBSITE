@@ -31,6 +31,7 @@
     <a href="#scope">Scope</a>
     <a href="#status">Status</a>
     <a href="updates.html">Updates<span class="nav-updates-dot"></span></a>
+    <a href="security.html">Security</a>
     <a href="#faq">FAQ</a>
     <a href="#contact">Contact</a>
   </div>
@@ -93,7 +94,7 @@
     <div class="pillar">
       <div class="pillar-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></div>
       <h3>Nobody in the middle</h3>
-      <p>Every message is end-to-end encrypted on the Signal Protocol — the same X3DH + Double Ratchet design used by other privacy-first messengers, so keys change constantly and old messages stay unreadable even if a later key leaks.</p>
+      <p>Every message is locked with a key that only you and the other person have — not even NWisp Chat can unlock it. That key also keeps changing with every message you send (this system is called the Signal Protocol, the same one other privacy-first apps use), so even if one message's key was ever somehow stolen, it couldn't be used to unlock anything sent before or after it.</p>
     </div>
     <div class="pillar">
       <div class="pillar-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
@@ -135,11 +136,11 @@
         <h4>Encryption &amp; verification</h4>
       </div>
       <ul>
-        <li>Signal Protocol — X3DH key agreement + Double Ratchet</li>
-        <li>Forward secrecy: keys change with every message</li>
-        <li>Safety number verification between two contacts</li>
-        <li>QR code contact adding</li>
-        <li>Messages decrypted on-device only, stored locally</li>
+        <li>Locked end-to-end using the Signal Protocol — the same trusted encryption system other privacy apps use</li>
+        <li>The lock changes with every message, so one leaked key can never unlock past or future messages</li>
+        <li>A way to double-check you're really talking to the right person, not an impersonator</li>
+        <li>Add someone instantly by scanning their QR code</li>
+        <li>Messages are only ever unlocked on your own phone, never on a server</li>
       </ul>
     </div>
 
@@ -177,7 +178,7 @@
       <ul>
         <li>Hidden chats behind a shared or per-chat code, plus optional PIN</li>
         <li>"Pause this chat" — a mutual, timed freeze either side can start</li>
-        <li>Blocking enforced at the message-delivery layer</li>
+        <li>Blocking actually stops their messages from reaching you — not just hidden in your inbox</li>
         <li>Screenshot &amp; screen-recording protection, on by default</li>
         <li>Per-chat and app-wide auto-delete timers</li>
         <li>Mute by keyword, globally or for just one chat</li>
@@ -193,7 +194,7 @@
       <ul>
         <li>View-once photos &amp; videos — open once, then gone, no saving</li>
         <li>"Clear on exit" — a chat wipes its local copy the moment you leave it</li>
-        <li>Inactivity auto-wipe — clear an untouched chat after N months, on by default off, overridable per chat</li>
+        <li>Inactivity auto-wipe — automatically clears a chat you haven't opened in a while (off by default, and you can turn it on or off for any single chat)</li>
         <li>Duress PIN — opens a harmless decoy screen instead of your real chats</li>
       </ul>
     </div>
@@ -332,7 +333,7 @@
 
     <details class="faq-item">
       <summary>Is NWisp Chat actually end-to-end encrypted, or is that marketing?</summary>
-      <p>It's real. Every chat runs the Signal Protocol — X3DH for the initial key exchange, then the Double Ratchet for every message after that — meaning encryption keys keep changing and the server relaying messages never has access to plaintext.</p>
+      <p>It's real, not just a marketing line. In plain terms: your phone and the other person's phone agree on a secret lock together before your first message, and that lock keeps changing automatically with every message after that. The server that passes your messages along never gets a copy of the key — it only ever sees scrambled data it can't read. This system is called the Signal Protocol, the same encryption used by other privacy-focused messaging apps.</p>
     </details>
 
     <details class="faq-item">
@@ -362,7 +363,7 @@
 
     <details class="faq-item">
       <summary>Does searching my messages send them anywhere?</summary>
-      <p>No. Search only looks through messages already decrypted and stored on your own device — nothing is sent to a server to be searched, matching the same zero-knowledge design as everything else here.</p>
+      <p>No. Search only looks through messages already unlocked and saved on your own phone — nothing gets sent anywhere to be searched. That's the same principle behind everything else here: the server passing your messages along never gets to see what's actually in them.</p>
     </details>
 
     <details class="faq-item">
@@ -377,7 +378,7 @@
 
     <details class="faq-item">
       <summary>What happens to my messages after 24 hours?</summary>
-      <p>They're removed from the relay server, whether they were delivered or not. There's no permanent server-side chat history. Anything you want to keep needs to stay on your device — see the question above for how that interacts with auto-delete, "clear on exit", and inactivity auto-wipe.</p>
+      <p>They're removed from the server that passes them along, whether they were delivered or not. Nothing is kept there permanently. Anything you want to keep needs to stay on your own device — see the question above for how that interacts with auto-delete, "clear on exit", and inactivity auto-wipe.</p>
     </details>
 
     <details class="faq-item">
@@ -398,6 +399,11 @@
     <details class="faq-item">
       <summary>Is the code open source?</summary>
       <p>Not right now. It may open up later, but the current priority is finishing the app itself.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Found a security issue — where do I report it?</summary>
+      <p>Please don't post it publicly first. See the <a href="security.html">Security page</a> for how to report it directly and privately, plus a list of any vulnerabilities found and fixed so far.</p>
     </details>
 
     <details class="faq-item">
@@ -473,6 +479,7 @@
   <p class="footer-sub">Built honestly, not oversold. An independent project, not affiliated with any other messaging app.</p>
   <div class="footer-links">
     <a href="updates.html">Updates</a>
+    <a href="security.html">Security</a>
     <a href="#faq">FAQ</a>
     <a href="#contact">Contact</a>
   </div>
