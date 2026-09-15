@@ -20,8 +20,8 @@
  */
 window.NWISP_UPDATES = [
   {
-    id: "search-privacy-tools-2026-10",
-    date: "October 2026",
+    id: "search-privacy-tools-2026-09b",
+    date: "September 2026",
     tag: "major",
     tagLabel: "Major update",
     title: "Search, a panic PIN, self-destructing media, and a lot more privacy control",
