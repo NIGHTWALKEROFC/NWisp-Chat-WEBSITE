@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <url>
+    <loc>https://nightwalkerofc.github.io/NWisp-Chat-WEBSITE/</loc>
+    <priority>1.0</priority>
+  </url>
+
+  <url>
+    <loc>https://nightwalkerofc.github.io/NWisp-Chat-WEBSITE/updates.html</loc>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://nightwalkerofc.github.io/NWisp-Chat-WEBSITE/security.html</loc>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://nightwalkerofc.github.io/NWisp-Chat-WEBSITE/help-center.html</loc>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://nightwalkerofc.github.io/NWisp-Chat-WEBSITE/account-recovery.html</loc>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://nightwalkerofc.github.io/NWisp-Chat-WEBSITE/community-guidelines.html</loc>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://nightwalkerofc.github.io/NWisp-Chat-WEBSITE/privacy-policy.html</loc>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://nightwalkerofc.github.io/NWisp-Chat-WEBSITE/terms.html</loc>
+    <priority>0.5</priority>
+  </url>
+
+  <!--
+    update.html is intentionally left out of the sitemap — it's a single
+    template rendered many different ways via ?id=..., not one distinct
+    page, so it isn't something to point a crawler at directly.
+  -->
+
+</urlset>
