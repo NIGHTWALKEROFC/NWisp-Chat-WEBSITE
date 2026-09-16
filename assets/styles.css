@@ -857,6 +857,7 @@ section:not(.hero){
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   padding: 4px 20px;
+  position: relative;
   transition: border-color .2s;
 }
 .faq-item[open]{ border-color: var(--amber-dim); }
@@ -1165,6 +1166,108 @@ section:not(.hero){
 }
 @media (max-width: 520px){
   .footer-grid{ grid-template-columns: 1fr; }
+}
+
+/* ============================================================
+   COMPARISON TABLE (compare.html)
+   ============================================================ */
+.compare-table-wrap{
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  max-width: 100%;
+}
+table.compare-table{
+  width: 100%;
+  min-width: 720px;
+  border-collapse: collapse;
+  font-size: 13.5px;
+}
+table.compare-table th, table.compare-table td{
+  padding: 14px 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--border-soft);
+  white-space: nowrap;
+}
+table.compare-table thead th{
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  background: var(--bg-alt);
+  position: sticky;
+  top: 0;
+}
+table.compare-table th:first-child, table.compare-table td:first-child{
+  position: sticky;
+  left: 0;
+  background: var(--panel);
+  font-weight: 500;
+  color: var(--text);
+  white-space: normal;
+  min-width: 190px;
+  z-index: 2;
+}
+table.compare-table thead th:first-child{ background: var(--bg-alt); z-index: 3; }
+table.compare-table tbody tr:last-child td{ border-bottom: none; }
+table.compare-table td.col-nwisp{ background: rgba(255,179,123,0.05); }
+.compare-val{ display: inline-flex; align-items: center; gap: 6px; }
+.compare-val svg{ width: 13px; height: 13px; flex-shrink: 0; }
+.compare-yes{ color: var(--green); }
+.compare-no{ color: var(--red); }
+.compare-partial{ color: var(--amber); }
+.compare-note{
+  font-size: 14.5px;
+  color: var(--text-muted);
+  max-width: 66ch;
+  margin-top: 20px;
+}
+
+/* ============================================================
+   FAQ — copy link to answer
+   ============================================================ */
+.faq-item summary{ padding-right: 60px; }
+.faq-copy-link{
+  position: absolute;
+  right: 30px;
+  top: 14px;
+  width: 24px; height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: var(--text-dim);
+  cursor: pointer;
+  padding: 0;
+  opacity: 0;
+  transition: opacity .15s ease, color .15s ease;
+}
+.faq-item:hover .faq-copy-link,
+.faq-item summary:focus-visible ~ .faq-copy-link{ opacity: 1; }
+.faq-copy-link svg{ width: 13px; height: 13px; }
+.faq-copy-link:hover{ color: var(--amber); }
+.faq-copy-link.copied{ color: var(--green); opacity: 1; }
+.faq-item:target{ border-color: var(--amber-dim); }
+
+/* ============================================================
+   PRINT STYLESHEET (Privacy Policy, Terms & similar doc pages)
+   ============================================================ */
+@media print{
+  body{ background: #fff; color: #000; }
+  .grain, .nav, .breadcrumb-bar, .footer, .btn, .nav-toggle,
+  .print-hide{ display: none !important; }
+  .page-header, section{ padding: 0 0 20px 0 !important; max-width: 100% !important; }
+  .section-eyebrow{ color: #555; }
+  .section-title{ color: #000; }
+  .page-header-copy{ color: #333; }
+  .legal-updated{ color: #555; }
+  .legal-section h2{ color: #000; page-break-after: avoid; }
+  .legal-section p{ color: #111; white-space: pre-line; }
+  .legal-section{ page-break-inside: avoid; margin-bottom: 20px; }
+  .legal-callout{ border: 1px solid #999; background: #f4f4f4; color: #111; }
+  a{ color: #000 !important; text-decoration: underline; }
 }
 
 /* ============================================================
