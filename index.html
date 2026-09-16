@@ -15,6 +15,170 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/styles.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "NWisp Chat",
+  "applicationCategory": "SocialNetworkingApplication",
+  "operatingSystem": "Android",
+  "description": "A privacy-focused messaging app with end-to-end encryption built on the Signal Protocol, group chats, and 24-hour Stories. No ads, no feed, no permanent posts.",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "image": "og-image.png",
+  "author": {
+    "@type": "Person",
+    "name": "Nightwalker"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is NWisp Chat actually end-to-end encrypted, or is that marketing?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It's real, not just a marketing line. In plain terms: your phone and the other person's phone agree on a secret lock together before your first message, and that lock keeps changing automatically with every message after that. The server that passes your messages along never gets a copy of the key \u2014 it only ever sees scrambled data it can't read. This system is called the Signal Protocol, the same encryption used by other privacy-focused messaging apps."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does NWisp Chat have group chats now?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. You can create a group, add contacts directly or invite people who need to accept, set admins, and restrict sending to admins only if you want. Every group message is still end-to-end encrypted to each member, and you can report either a specific person or the group itself if something goes wrong."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I make voice or video calls?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Not yet \u2014 that's still on the roadmap. You can record and send voice messages in any chat right now, but live calls aren't built."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I know I'm really talking to the right person?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Each conversation has a safety number you and the other person can compare through a separate channel (a call, in person, etc.). If it matches on both ends, no one is intercepting the conversation."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "There are a few different ways messages can disappear now \u2014 what's the difference?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Four separate things, each doing a different job: (1) the 24-hour relay limit \u2014 every message is removed from the server after 24 hours no matter what, delivered or not, and this is always on and can't be turned off. (2) Auto-delete timers \u2014 an optional per-chat or app-wide setting that deletes a message from your device a set time after it's read. (3) \"Clear on exit\" \u2014 an optional per-chat toggle that wipes that chat's local copy on your device every time you close it. (4) Inactivity auto-wipe \u2014 an optional setting (global default or per-chat override) that clears a chat's local copy after it's gone untouched for a set number of months. Only #1 is mandatory; #2\u20134 are all off unless you turn them on, and they only ever affect your own device, never the other person's."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What's the difference between starred and pinned messages?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Pinning is shared \u2014 both people in the chat see the same pinned banner, capped at 3 messages. Starring is private \u2014 it's your own personal bookmark list across every chat and group, and no one else ever sees which messages you've starred."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does searching my messages send them anywhere?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Search only looks through messages already unlocked and saved on your own phone \u2014 nothing gets sent anywhere to be searched. That's the same principle behind everything else here: the server passing your messages along never gets to see what's actually in them."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What's a duress PIN?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A second PIN you can set up, completely separate from your real one. If you're ever forced to unlock your phone, typing the duress PIN instead of your real one opens a harmless decoy screen \u2014 an empty, normal-looking chat list with nothing real on it \u2014 instead of your actual conversations. To get back to your real chats afterward, close and reopen the app and enter your real PIN."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does the link-safety warning block dangerous links for me?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No \u2014 it warns, it doesn't block. It's a simple on-device check for common red flags (raw IP addresses, lookalike domains, known link-shortener services, etc.) meant to make you pause and look before tapping. It won't catch every bad link, and it may occasionally flag a safe one \u2014 it's a nudge, not a guarantee."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What happens to my messages after 24 hours?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "They're removed from the server that passes them along, whether they were delivered or not. Nothing is kept there permanently. Anything you want to keep needs to stay on your own device \u2014 see the question above for how that interacts with auto-delete, \"clear on exit\", and inactivity auto-wipe."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I need a phone number to sign up?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Sign-up only needs a username, an email address (kept private), and a password. Your public identity to other people is just your username."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What if someone gets access to my phone?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "App lock (PIN or biometric), hidden chats with their own code and optional PIN, a duress PIN if you want a decoy screen instead of your real chats, and the fact that your account can only be signed in on one device at a time all help here \u2014 plus screenshot and screen-recording protection inside chats, which is on by default."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is it free?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, completely. No premium tier, no ads, no paid unlocks. That may change if hosting costs become unsustainable, but there's no plan for that right now."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is the code open source?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Not right now. It may open up later, but the current priority is finishing the app itself."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Found a security issue \u2014 where do I report it?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Please don't post it publicly first. See the Security page for how to report it directly and privately, plus a list of any vulnerabilities found and fixed so far."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "I need help actually using the app \u2014 where's that?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "This FAQ is more about whether NWisp Chat is trustworthy. For practical questions like \"I forgot my PIN\" or \"why can't I edit a voice message,\" see the full Help Centre \u2014 the same one built into the app itself."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Who's building this?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "One person, as an independent project \u2014 see the Contact section below for how to reach out."
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body>
 <div class="grain"></div>
@@ -333,87 +497,87 @@
   <h2 class="section-title">Frequently asked</h2>
   <div class="faq-list">
 
-    <details class="faq-item">
+    <details class="faq-item" id="faq-encrypted-real">
       <summary>Is NWisp Chat actually end-to-end encrypted, or is that marketing?</summary>
       <p>It's real, not just a marketing line. In plain terms: your phone and the other person's phone agree on a secret lock together before your first message, and that lock keeps changing automatically with every message after that. The server that passes your messages along never gets a copy of the key — it only ever sees scrambled data it can't read. This system is called the Signal Protocol, the same encryption used by other privacy-focused messaging apps.</p>
     </details>
 
-    <details class="faq-item">
+    <details class="faq-item" id="faq-groups">
       <summary>Does NWisp Chat have group chats now?</summary>
       <p>Yes. You can create a group, add contacts directly or invite people who need to accept, set admins, and restrict sending to admins only if you want. Every group message is still end-to-end encrypted to each member, and you can report either a specific person or the group itself if something goes wrong.</p>
     </details>
 
-    <details class="faq-item">
+    <details class="faq-item" id="faq-calls">
       <summary>Can I make voice or video calls?</summary>
       <p>Not yet — that's still on the roadmap. You can record and send voice messages in any chat right now, but live calls aren't built.</p>
     </details>
 
-    <details class="faq-item">
+    <details class="faq-item" id="faq-verify-identity">
       <summary>How do I know I'm really talking to the right person?</summary>
       <p>Each conversation has a safety number you and the other person can compare through a separate channel (a call, in person, etc.). If it matches on both ends, no one is intercepting the conversation.</p>
     </details>
 
-    <details class="faq-item">
+    <details class="faq-item" id="faq-disappearing-messages">
       <summary>There are a few different ways messages can disappear now — what's the difference?</summary>
       <p>Four separate things, each doing a different job: <strong>(1) the 24-hour relay limit</strong> — every message is removed from the server after 24 hours no matter what, delivered or not, and this is always on and can't be turned off. <strong>(2) Auto-delete timers</strong> — an optional per-chat or app-wide setting that deletes a message from your device a set time after it's read. <strong>(3) "Clear on exit"</strong> — an optional per-chat toggle that wipes that chat's local copy on your device every time you close it. <strong>(4) Inactivity auto-wipe</strong> — an optional setting (global default or per-chat override) that clears a chat's local copy after it's gone untouched for a set number of months. Only #1 is mandatory; #2–4 are all off unless you turn them on, and they only ever affect your own device, never the other person's.</p>
     </details>
 
-    <details class="faq-item">
+    <details class="faq-item" id="faq-starred-vs-pinned">
       <summary>What's the difference between starred and pinned messages?</summary>
       <p>Pinning is shared — both people in the chat see the same pinned banner, capped at 3 messages. Starring is private — it's your own personal bookmark list across every chat and group, and no one else ever sees which messages you've starred.</p>
     </details>
 
-    <details class="faq-item">
+    <details class="faq-item" id="faq-search-privacy">
       <summary>Does searching my messages send them anywhere?</summary>
       <p>No. Search only looks through messages already unlocked and saved on your own phone — nothing gets sent anywhere to be searched. That's the same principle behind everything else here: the server passing your messages along never gets to see what's actually in them.</p>
     </details>
 
-    <details class="faq-item">
+    <details class="faq-item" id="faq-duress-pin">
       <summary>What's a duress PIN?</summary>
       <p>A second PIN you can set up, completely separate from your real one. If you're ever forced to unlock your phone, typing the duress PIN instead of your real one opens a harmless decoy screen — an empty, normal-looking chat list with nothing real on it — instead of your actual conversations. To get back to your real chats afterward, close and reopen the app and enter your real PIN.</p>
     </details>
 
-    <details class="faq-item">
+    <details class="faq-item" id="faq-link-warning">
       <summary>Does the link-safety warning block dangerous links for me?</summary>
       <p>No — it warns, it doesn't block. It's a simple on-device check for common red flags (raw IP addresses, lookalike domains, known link-shortener services, etc.) meant to make you pause and look before tapping. It won't catch every bad link, and it may occasionally flag a safe one — it's a nudge, not a guarantee.</p>
     </details>
 
-    <details class="faq-item">
+    <details class="faq-item" id="faq-after-24-hours">
       <summary>What happens to my messages after 24 hours?</summary>
       <p>They're removed from the server that passes them along, whether they were delivered or not. Nothing is kept there permanently. Anything you want to keep needs to stay on your own device — see the question above for how that interacts with auto-delete, "clear on exit", and inactivity auto-wipe.</p>
     </details>
 
-    <details class="faq-item">
+    <details class="faq-item" id="faq-phone-number">
       <summary>Do I need a phone number to sign up?</summary>
       <p>No. Sign-up only needs a username, an email address (kept private), and a password. Your public identity to other people is just your username.</p>
     </details>
 
-    <details class="faq-item">
+    <details class="faq-item" id="faq-phone-access">
       <summary>What if someone gets access to my phone?</summary>
       <p>App lock (PIN or biometric), hidden chats with their own code and optional PIN, a duress PIN if you want a decoy screen instead of your real chats, and the fact that your account can only be signed in on one device at a time all help here — plus screenshot and screen-recording protection inside chats, which is on by default.</p>
     </details>
 
-    <details class="faq-item">
+    <details class="faq-item" id="faq-free">
       <summary>Is it free?</summary>
       <p>Yes, completely. No premium tier, no ads, no paid unlocks. That may change if hosting costs become unsustainable, but there's no plan for that right now.</p>
     </details>
 
-    <details class="faq-item">
+    <details class="faq-item" id="faq-open-source">
       <summary>Is the code open source?</summary>
       <p>Not right now. It may open up later, but the current priority is finishing the app itself.</p>
     </details>
 
-    <details class="faq-item">
+    <details class="faq-item" id="faq-security-report">
       <summary>Found a security issue — where do I report it?</summary>
       <p>Please don't post it publicly first. See the <a href="security.html">Security page</a> for how to report it directly and privately, plus a list of any vulnerabilities found and fixed so far.</p>
     </details>
 
-    <details class="faq-item">
+    <details class="faq-item" id="faq-help-using-app">
       <summary>I need help actually using the app — where's that?</summary>
       <p>This FAQ is more about whether NWisp Chat is trustworthy. For practical questions like "I forgot my PIN" or "why can't I edit a voice message," see the full <a href="help-center.html">Help Centre</a> — the same one built into the app itself.</p>
     </details>
 
-    <details class="faq-item">
+    <details class="faq-item" id="faq-who-builds">
       <summary>Who's building this?</summary>
       <p>One person, as an independent project — see the Contact section below for how to reach out.</p>
     </details>
@@ -495,6 +659,7 @@
       <a href="index.html#concept">Concept</a>
       <a href="index.html#features">Features</a>
       <a href="updates.html">Updates</a>
+      <a href="compare.html">Compare</a>
     </div>
     <div class="footer-col">
       <h5>Trust &amp; safety</h5>
@@ -559,6 +724,46 @@
       </div>
       <ul class="updates-preview-points">${mainPoints}</ul>
     `;
+  })();
+</script>
+<script>
+  // "Copy link to this answer" button on every FAQ item + auto-open from a shared link
+  (function () {
+    const copyIconSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg>';
+    const checkIconSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg>';
+
+    document.querySelectorAll('.faq-item[id]').forEach((item) => {
+      const summary = item.querySelector('summary');
+      if (!summary) return;
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'faq-copy-link';
+      btn.setAttribute('aria-label', 'Copy link to this answer');
+      btn.innerHTML = copyIconSvg;
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const url = location.origin + location.pathname + '#' + item.id;
+        navigator.clipboard.writeText(url).then(() => {
+          btn.innerHTML = checkIconSvg;
+          btn.classList.add('copied');
+          setTimeout(() => {
+            btn.innerHTML = copyIconSvg;
+            btn.classList.remove('copied');
+          }, 1500);
+        });
+      });
+      summary.insertAdjacentElement('afterend', btn);
+    });
+
+    // if the page was opened with a link to one specific answer, open it and scroll to it
+    if (location.hash) {
+      const target = document.querySelector(location.hash);
+      if (target && target.classList.contains('faq-item')) {
+        target.setAttribute('open', '');
+        setTimeout(() => target.scrollIntoView({ behavior: 'smooth', block: 'center' }), 60);
+      }
+    }
   })();
 </script>
 </body>
