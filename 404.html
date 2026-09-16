@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Page not found — NWisp Chat</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+<style>
+  .notfound-wrap{
+    max-width: var(--wrap);
+    margin: 0 auto;
+    padding: clamp(70px, 14vw, 140px) clamp(20px, 5vw, 56px);
+    text-align: center;
+  }
+  .notfound-code{
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    border: 1px solid var(--border);
+    display: inline-block;
+    padding: 5px 14px;
+    border-radius: 100px;
+    margin-bottom: 26px;
+  }
+  .notfound-wrap h1{
+    font-size: clamp(2.4rem, 7vw, 4rem);
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+    background: linear-gradient(180deg, #FFFFFF 0%, #B9C0CE 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .notfound-wrap p{
+    color: var(--text-muted);
+    font-size: 16px;
+    max-width: 46ch;
+    margin: 0 auto 36px;
+  }
+  .notfound-actions{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 14px;
+    margin-bottom: 56px;
+  }
+  .notfound-links{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px 22px;
+  }
+  .notfound-links a{
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+  .notfound-links a:hover{ color: var(--amber); }
+</style>
+</head>
+<body>
+<div class="grain"></div>
+
+<nav class="nav">
+  <a href="index.html" class="nav-brand">
+    <span class="brand-mark"></span>
+    NWisp Chat
+  </a>
+  <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false" id="navToggle">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-links" id="navLinks">
+    <a href="index.html#concept">Concept</a>
+    <a href="index.html#features">Features</a>
+    <a href="updates.html">Updates</a>
+    <a href="security.html">Security</a>
+    <a href="help-center.html">Help Centre</a>
+    <a href="index.html#contact">Contact</a>
+  </div>
+  <a href="index.html#contact" class="nav-cta">Get in touch</a>
+</nav>
+
+<div class="notfound-wrap">
+  <span class="notfound-code">404 — Not found</span>
+  <h1>This page disappeared<br>faster than a message.</h1>
+  <p>
+    Whatever you were looking for isn't here — maybe it moved, maybe the link
+    was wrong. Either way, here's how to get back to something real.
+  </p>
+  <div class="notfound-actions">
+    <a href="index.html" class="btn btn-primary">Back to home</a>
+    <a href="updates.html" class="btn btn-ghost">See latest updates</a>
+  </div>
+  <div class="notfound-links">
+    <a href="security.html">Security</a>
+    <a href="help-center.html">Help Centre</a>
+    <a href="account-recovery.html">Account Recovery</a>
+    <a href="privacy-policy.html">Privacy Policy</a>
+    <a href="terms.html">Terms &amp; Conditions</a>
+    <a href="community-guidelines.html">Community Guidelines</a>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-grid">
+    <div class="footer-brand-col">
+      <a href="index.html" class="nav-brand" style="margin-bottom:10px;">
+        <span class="brand-mark"></span>NWisp Chat
+      </a>
+      <p>Your conversations. Your privacy.</p>
+      <p class="footer-sub">Built honestly, not oversold. An independent project, not affiliated with any other messaging app.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Product</h5>
+      <a href="index.html#concept">Concept</a>
+      <a href="index.html#features">Features</a>
+      <a href="updates.html">Updates</a>
+    </div>
+    <div class="footer-col">
+      <h5>Trust &amp; safety</h5>
+      <a href="security.html">Security</a>
+      <a href="community-guidelines.html">Community Guidelines</a>
+      <a href="account-recovery.html">Account Recovery</a>
+    </div>
+    <div class="footer-col">
+      <h5>Legal</h5>
+      <a href="privacy-policy.html">Privacy Policy</a>
+      <a href="terms.html">Terms &amp; Conditions</a>
+    </div>
+    <div class="footer-col">
+      <h5>Support</h5>
+      <a href="help-center.html">Help Centre</a>
+      <a href="index.html#faq">FAQ</a>
+      <a href="index.html#contact">Contact</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-sub">&copy; 2026 NWisp Chat</span>
+  </div>
+</footer>
+
+<script>
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', () => {
+    const open = navLinks.classList.toggle('is-open');
+    navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+</script>
+</body>
+</html>
