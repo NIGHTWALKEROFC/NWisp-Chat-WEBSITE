@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Account Recovery — NWisp Chat</title>
+<meta name="description" content="Lost your password, think someone else got into your account, or forgot a PIN? Here's how to get back in.">
+<meta property="og:title" content="Account Recovery — NWisp Chat">
+<meta property="og:image" content="og-image.png">
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+<div class="grain"></div>
+
+<nav class="nav">
+  <a href="index.html" class="nav-brand">
+    <span class="brand-mark"></span>
+    NWisp Chat
+  </a>
+  <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false" id="navToggle">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-links" id="navLinks">
+    <a href="index.html#concept">Concept</a>
+    <a href="index.html#features">Features</a>
+    <a href="index.html#scope">Scope</a>
+    <a href="index.html#status">Status</a>
+    <a href="updates.html">Updates</a>
+    <a href="security.html">Security</a>
+    <a href="index.html#faq">FAQ</a>
+    <a href="index.html#contact">Contact</a>
+  </div>
+  <a href="index.html#contact" class="nav-cta">Get in touch</a>
+</nav>
+
+<div class="breadcrumb-bar">
+  <div class="breadcrumb">
+    <a href="index.html">Home</a>
+    <span class="crumb-sep">/</span>
+    <span class="crumb-current">Account Recovery</span>
+  </div>
+</div>
+
+<div class="page-header">
+  <p class="section-eyebrow">Trust &amp; safety</p>
+  <h1 class="section-title">Lost access, or think someone else got in?</h1>
+  <p class="page-header-copy">
+    Pick whichever one matches what's happening. Each one is a real, working
+    flow already inside the app — this page just explains what it does and
+    why, in plain terms.
+  </p>
+</div>
+
+<section>
+  <div class="legal-doc" style="max-width: 100%;">
+
+    <div class="recovery-block" id="forgot-password">
+      <h2>
+        <span class="recovery-block-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></span>
+        I forgot my password
+      </h2>
+      <p>Use "Forgot password?" on the sign-in screen. Enter the email your account uses, and we'll send a reset link to that address.</p>
+      <ol>
+        <li>Tap "Forgot password?" on the sign-in screen</li>
+        <li>Enter your account email and submit</li>
+        <li>Open the reset link from your email</li>
+        <li>Set a new password and sign in with it</li>
+      </ol>
+      <p>This only works if you still have access to that email account — see the last section on this page if you don't.</p>
+    </div>
+
+    <div class="recovery-block" id="hacked">
+      <h2>
+        <span class="recovery-block-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="M9 12l2 2 4-4"/></svg></span>
+        I think someone else signed into my account
+      </h2>
+      <p>NWisp Chat only allows one signed-in device at a time, and every sign-in is logged with an approximate location. Here's what to do:</p>
+      <ol>
+        <li>Open Settings → Account security and check "Recent activity" for a sign-in you don't recognize</li>
+        <li>Change your password immediately — this signs the other device out right away, the same instant you do it</li>
+        <li>Turn on "Require approval for new logins" so any future sign-in has to be approved from a device you already control, instead of instantly kicking you out</li>
+        <li>If you think this happened through an actual bug or exploit, not just someone guessing a weak password, report it on the <a href="security.html">Security page</a> instead of just changing your password</li>
+      </ol>
+    </div>
+
+    <div class="recovery-block" id="forgot-pin">
+      <h2>
+        <span class="recovery-block-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></span>
+        I forgot my app-lock PIN
+      </h2>
+      <p>App lock has its own "Forgot PIN?" option that goes through the same password-reset flow above — since you'd need to prove you're the account owner either way, it reuses the same email-link process rather than a separate one.</p>
+      <ol>
+        <li>On the app-lock screen, tap "Forgot PIN?"</li>
+        <li>Follow the password-reset email link the same way as above</li>
+        <li>Signing back in with your (possibly new) password clears the old PIN — you'll be asked to set a new one</li>
+      </ol>
+    </div>
+
+    <div class="recovery-block" id="forgot-hidden-code">
+      <h2>
+        <span class="recovery-block-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
+        I forgot my hidden-chats code
+      </h2>
+      <p>This is the one recovery flow that's deliberately not gentle — on purpose. Resetting a hide code always wipes the content it was protecting, rather than quietly showing it again. That's intentional: if this were a soft "turn hiding off" toggle, anyone holding your unlocked phone could just switch it off and read everything hidden behind it. Requiring your real password and typing a confirmation word makes that a lot harder to do to someone else's phone.</p>
+      <ol>
+        <li>Go to the hidden-chats reset option in Settings → Security</li>
+        <li>Choose whether you're resetting the shared code (wipes every chat hidden under it) or one specific chat's own custom code (wipes just that one chat)</li>
+        <li>Enter your account password to confirm it's really you</li>
+        <li>Type <strong>RESET</strong> to confirm — this step exists so it can never happen by accident</li>
+      </ol>
+      <p>There's no way to recover the wiped content afterward — it's the same as clearing a chat. If you just want to see what's hidden and remember the code, you don't need this at all — only use it if the code is genuinely gone.</p>
+    </div>
+
+    <div class="recovery-block" id="no-email">
+      <h2>
+        <span class="recovery-block-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span>
+        I don't have access to my email either
+      </h2>
+      <p>All of the flows above rely on your account email, since we have no phone number on file and no way to verify identity any other way without it. If that email is also gone, reach out directly and explain the situation — every case like this has to be handled individually, and there's no guaranteed outcome, but it's worth asking.</p>
+      <div class="disclosure-panel-row">
+        <a class="btn btn-primary btn-sm" href="mailto:rinshan602@gmail.com?subject=Account%20recovery%20-%20NWisp%20Chat">
+          Email about account recovery
+        </a>
+        <a class="btn btn-ghost btn-sm" href="https://t.me/nightwalker_ofc0" target="_blank" rel="noopener">
+          Or message on Telegram
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-grid">
+    <div class="footer-brand-col">
+      <a href="index.html" class="nav-brand" style="margin-bottom:10px;">
+        <span class="brand-mark"></span>NWisp Chat
+      </a>
+      <p>Your conversations. Your privacy.</p>
+      <p class="footer-sub">Built honestly, not oversold. An independent project, not affiliated with any other messaging app.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Product</h5>
+      <a href="index.html#concept">Concept</a>
+      <a href="index.html#features">Features</a>
+      <a href="updates.html">Updates</a>
+    </div>
+    <div class="footer-col">
+      <h5>Trust &amp; safety</h5>
+      <a href="security.html">Security</a>
+      <a href="community-guidelines.html">Community Guidelines</a>
+      <a href="account-recovery.html">Account Recovery</a>
+    </div>
+    <div class="footer-col">
+      <h5>Legal</h5>
+      <a href="privacy-policy.html">Privacy Policy</a>
+      <a href="terms.html">Terms &amp; Conditions</a>
+    </div>
+    <div class="footer-col">
+      <h5>Support</h5>
+      <a href="help-center.html">Help Centre</a>
+      <a href="index.html#faq">FAQ</a>
+      <a href="index.html#contact">Contact</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-sub">&copy; 2026 NWisp Chat</span>
+  </div>
+</footer>
+
+<script>
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', () => {
+    const open = navLinks.classList.toggle('is-open');
+    navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+</script>
+</body>
+</html>
