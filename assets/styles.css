@@ -1040,6 +1040,134 @@ section:not(.hero){
 }
 
 /* ============================================================
+   LEGAL / POLICY DOCUMENT PAGES (Privacy, Terms, Guidelines)
+   ============================================================ */
+.legal-updated{
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  color: var(--text-dim);
+  margin-bottom: 30px;
+}
+.legal-doc{
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  max-width: 760px;
+}
+.legal-section{ scroll-margin-top: 90px; }
+.legal-section h2{
+  font-size: 16px;
+  color: var(--text);
+  margin-bottom: 10px;
+}
+.legal-section p{
+  font-size: 14.5px;
+  color: var(--text-muted);
+  white-space: pre-line;
+}
+.legal-section a{ color: var(--amber); border-bottom: 1px solid var(--amber-dim); }
+.legal-callout{
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--amber-dim);
+  border-radius: var(--radius-sm);
+  padding: 18px 20px;
+  font-size: 14px;
+  color: var(--text-muted);
+  max-width: 760px;
+}
+.legal-callout strong{ color: var(--text); }
+
+/* ============================================================
+   ACCOUNT RECOVERY — step blocks
+   ============================================================ */
+.recovery-block{
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 26px 28px;
+  margin-bottom: 16px;
+  scroll-margin-top: 90px;
+}
+.recovery-block h2{
+  font-size: 17px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.recovery-block-icon{
+  width: 30px; height: 30px;
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 9px;
+  background: rgba(255,179,123,0.1);
+  border: 1px solid var(--amber-dim);
+  color: var(--amber);
+}
+.recovery-block-icon svg{ width: 15px; height: 15px; }
+.recovery-block p{
+  font-size: 14.5px;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+}
+.recovery-block ol, .recovery-block ul{
+  margin: 12px 0 0;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.recovery-block li{
+  font-size: 14px;
+  color: var(--text-muted);
+}
+.recovery-block li::marker{ color: var(--amber); }
+
+/* ============================================================
+   GROUPED FOOTER (multi-column, site-wide)
+   ============================================================ */
+.footer-grid{
+  display: grid;
+  grid-template-columns: 1.4fr repeat(4, 1fr);
+  gap: 28px;
+  margin-bottom: 32px;
+}
+.footer-brand-col p{ font-size: 13.5px; color: var(--text-muted); margin-bottom: 8px; }
+.footer-col h5{
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 14px;
+}
+.footer-col a{
+  display: block;
+  font-size: 13.5px;
+  color: var(--text-muted);
+  padding: 6px 0;
+  transition: color .15s ease;
+}
+.footer-col a:hover{ color: var(--amber); }
+.footer-bottom{
+  border-top: 1px solid var(--border-soft);
+  padding-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+@media (max-width: 900px){
+  .footer-grid{ grid-template-columns: repeat(2, 1fr); }
+  .footer-brand-col{ grid-column: 1 / -1; }
+}
+@media (max-width: 520px){
+  .footer-grid{ grid-template-columns: 1fr; }
+}
+
+/* ============================================================
    MOTION PREFERENCES
    ============================================================ */
 @media (prefers-reduced-motion: reduce){
