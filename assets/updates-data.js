@@ -20,6 +20,69 @@
  */
 window.NWISP_UPDATES = [
   {
+    id: "forwarding-settings-revamp-2026-09-19",
+    date: "September 19, 2026",
+    tag: "major",
+    tagLabel: "Major update",
+    title: "Message forwarding, a reorganized Settings, and finer-grained control",
+    intro:
+      "This update is mostly about two things: forwarding a message finally exists, and Settings has been rebuilt from one long list into proper categories — alongside a handful of smaller controls that make the app behave a bit more the way people expect.",
+    points: [
+      { type: "added", text: "Message forwarding — forward a text message to one of your contacts, permission-gated per chat" },
+      { type: "added", text: "Timed mute — mute a chat for a set time, not just forever, from the swipe gesture or chat settings" },
+      { type: "added", text: "Unread count badge on the app icon (on launchers that support it)" },
+      { type: "added", text: "\"Suggest a strong password\" on sign-up and password reset" },
+      { type: "added", text: "Option to separate groups from regular chats in your chat list" },
+      { type: "added", text: "\"Lock when I leave the app\" — app lock can trigger the instant you background the app" },
+      { type: "added", text: "Auto-lock after a chosen period of inactivity" },
+      { type: "added", text: "Hide last-seen or read receipts from one specific person, without turning it off for everyone" },
+      { type: "changed", text: "Settings reorganized into category pages — Chats, Notifications, Privacy, Security, Help & About — instead of one long list" },
+    ],
+    detail: {
+      added: [
+        {
+          title: "Message forwarding",
+          body: "Forward a text message straight to one of your 1:1 contacts. This first version covers one text message at a time, forwarded into a 1:1 chat. It's permission-gated: forwarding only works if it's switched on for that source chat, and it's checked again live on the server the moment you actually send it — so if the other person turns forwarding off while you have the screen open, the send is refused rather than quietly going through anyway."
+        },
+        {
+          title: "Timed mute",
+          body: "Mute a chat for a set amount of time instead of only \"forever until I turn it back on.\" Available both from the swipe-to-mute gesture on your chat list and from a chat or group's own settings, so every way of muting offers the same choices."
+        },
+        {
+          title: "Unread count badge",
+          body: "Turn on a number badge on the app's home-screen icon showing how many unread chats you have, from Settings > Notifications. Worth knowing upfront: Android has no single official badge system, so this behaves differently by phone brand — Samsung, Oppo, Vivo, Xiaomi and similar show a real number, while stock Android/Pixel launchers only ever show a plain dot regardless of the actual count. That's a limit of Android itself, not something the app can fully work around."
+        },
+        {
+          title: "Suggested strong passwords",
+          body: "A \"suggest a strong password\" button on both sign-up and password reset, with a copy button next to it and a show/hide toggle. It's generated with a cryptographically secure random source and deliberately never built from your name or email — pulling in identifiable details like that would give anyone who already knows them a head start guessing the password, which defeats the point of generating one in the first place. Tap it again for a different suggestion any time."
+        },
+        {
+          title: "Separate groups from chats",
+          body: "An optional switch in Settings > Chats to keep group chats out of your main chat list and viewed separately, for anyone who'd rather not have 1:1s and groups mixed together."
+        },
+        {
+          title: "\"Lock when I leave the app\"",
+          body: "A new app-lock setting that locks the app the instant you background it, rather than only when it's fully cold-started again. Sits alongside the existing PIN and biometric unlock rather than replacing either."
+        },
+        {
+          title: "Auto-lock after inactivity",
+          body: "Set the app to lock itself automatically after it's been sitting open and idle for a chosen amount of time — a middle ground between locking on every single background and never locking until you close the app yourself."
+        },
+        {
+          title: "Per-contact last-seen & read-receipt privacy",
+          body: "Last-seen and read receipts already had an app-wide on/off switch — you can now also hide either one from one specific person only, right from that person's own chat settings, without changing the setting for everyone else."
+        }
+      ],
+      changed: [
+        {
+          title: "Settings reorganized",
+          body: "Settings used to be one long flat list mixing PIN setup, theme, last-seen, muted keywords, legal pages, and everything else together. It's now a clean top-level menu split into Chats, Notifications, Privacy, Security, and Help & About — tap a category, see only what belongs to it. Nothing was removed, it's purely reorganized into fewer things to scroll past to find one setting."
+        }
+      ],
+      removed: []
+    }
+  },
+  {
     id: "search-privacy-tools-2026-09b",
     date: "September 15, 2026",
     tag: "major",
