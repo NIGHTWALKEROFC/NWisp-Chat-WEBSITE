@@ -20,6 +20,129 @@
  */
 window.NWISP_UPDATES = [
   {
+    id: "communities-vault-2fa-2026-09-26",
+    date: "September 26, 2026",
+    tag: "major",
+    tagLabel: "Major update",
+    title: "Communities, a Media Vault, real 2FA, and a lot of quiet security work",
+    intro:
+      "This is the biggest update yet. Public Communities exist now, there's a separate encrypted vault for private photos, real authenticator-app two-factor authentication shipped, and a long list of smaller privacy and anti-abuse protections came in underneath all of it.",
+    points: [
+      { type: "added", text: "Communities — public, joinable groups with categories and optional location, found from their own home-screen tab" },
+      { type: "added", text: "Announcements — admin-only-post groups, kept in their own tab so they don't clutter your chats" },
+      { type: "added", text: "Media Vault — a separate encrypted space for photos and videos, locked with its own PIN or biometric-only mode" },
+      { type: "added", text: "Intruder Photo — silently photographs repeated wrong app-lock attempts into the vault" },
+      { type: "added", text: "Two-factor authentication — real authenticator-app (TOTP) support with one-time backup codes" },
+      { type: "added", text: "Password breach checking — warns if a password you're choosing has shown up in known data breaches" },
+      { type: "added", text: "CAPTCHA on sign-up and password reset, to block scripted abuse" },
+      { type: "added", text: "Privacy Checkup — a guided 4-step walkthrough of your privacy settings" },
+      { type: "added", text: "Privacy Lockdown — one tap to turn on every privacy-maximizing setting at once" },
+      { type: "added", text: "Traffic camouflage — optional message padding and decoy traffic to obscure timing and size patterns" },
+      { type: "added", text: "Private keyboard mode — asks your keyboard not to learn from or suggest based on what you type here" },
+      { type: "added", text: "Secure clipboard — auto-clears a copied password or code after about 45 seconds" },
+      { type: "added", text: "Scheduled messages — write now, send later, with an optional silent send" },
+      { type: "added", text: "Note to Self — a private notepad that works like chatting with yourself" },
+      { type: "added", text: "Shake to lock — three sharp shakes locks the app instantly" },
+      { type: "added", text: "In-chat message search, alongside the existing global search" },
+      { type: "added", text: "Per-chat accent color, separate from per-chat wallpaper" },
+      { type: "added", text: "Multiple devices — opt-in support for up to 5 signed-in devices, single-device stays the default" },
+      { type: "changed", text: "Story privacy now uses one shared picker for both your default audience and a per-post override" },
+      { type: "changed", text: "Changing your email now asks you to confirm it twice, catching typos before it's sent" },
+      { type: "changed", text: "Privacy Policy, Terms & Conditions, and Community Guidelines substantially expanded to cover everything above" },
+    ],
+    detail: {
+      added: [
+        {
+          title: "Communities",
+          body: "A public, joinable group anyone can find from the Community tab — different from a regular group in that its name, description, topic, and optional location are visible to every NWisp Chat user, not just members. Creating one is free and open, with ready-made categories to pick from and full country/state/district location data for India (free-text elsewhere). Its actual messages are end-to-end encrypted exactly like a group's."
+        },
+        {
+          title: "Announcements",
+          body: "Groups where only admins can post now live in their own home-screen tab, kept separate from your regular chats. Everyone can still read and react, and can reply privately to whoever posted — sending into the group itself is just limited to admins. The tab can be switched off in Settings if you'd rather these appeared in your normal chat list."
+        },
+        {
+          title: "Media Vault",
+          body: "A private, encrypted space for photos and videos that's completely separate from your regular chats and from app lock. You can open it with its own PIN — resettable with your account password — or switch to biometric-only mode, which deletes the PIN entirely and has no reset path at all: knowing your account password gets someone nothing if you've chosen that mode."
+        },
+        {
+          title: "Intruder Photo",
+          body: "Off by default, turned on in Settings > Security. Once on, the front camera quietly takes a photo after repeated wrong app-lock PIN attempts and saves it straight into the Media Vault, labeled with the time. The camera permission is only ever requested when you turn the feature on — never at the lock screen itself, where a permission pop-up would tip off whoever's trying to get in."
+        },
+        {
+          title: "Two-factor authentication (TOTP)",
+          body: "Real, standard authenticator-app based two-factor authentication — scan a QR code with an app like Google Authenticator or Aegis, confirm a code, and you're given 10 one-time backup codes shown exactly once. This is a meaningfully stronger design than a memorized PIN: the codes are generated by an app you hold, not something you have to remember, and losing your phone doesn't lock you out as long as you saved the backup codes."
+        },
+        {
+          title: "Password breach checking",
+          body: "When you're choosing a password — signing up, resetting, or changing one — it's checked against the Have I Been Pwned database of known breached passwords. Only the first 5 characters of your password's hash are ever sent, using the k-anonymity method HaveIBeenPwned specifically designed for this — your actual password never leaves your device. It's a warning, not a hard block: a network hiccup never stops you from signing up."
+        },
+        {
+          title: "CAPTCHA on sign-up and password reset",
+          body: "A real challenge (Cloudflare Turnstile) now has to be solved before the app will send a sign-up code or a password-reset code, so scripted mass-account-creation or mass-reset-request abuse can't just hammer the server automatically."
+        },
+        {
+          title: "Privacy Checkup",
+          body: "A guided, 4-step walkthrough — lock your app, control what others see, keep notifications quiet, protect this phone and your account — for anyone who wants a clear path through the privacy settings instead of hunting for them individually."
+        },
+        {
+          title: "Privacy Lockdown",
+          body: "For when you want maximum privacy right now: one screen shows you exactly what will be switched on (with a plain-language note on what each change actually does, like \"you won't see other people's read receipts either\"), and only applies anything once you confirm."
+        },
+        {
+          title: "Traffic camouflage",
+          body: "Off by default, both globally and per chat. Even though message content is always encrypted, someone who could see the relay server's activity (never its content) could still learn something from the pattern alone — roughly when you're active, how often you message someone, how long each message tends to be. This feature blurs both signals: text messages are padded to a fixed size bucket before encryption, and real, fully encrypted decoy messages get sent at random intervals to camouflage-enabled chats. Only the recipient's device can tell a decoy from a real message; it's silently discarded there."
+        },
+        {
+          title: "Private keyboard mode",
+          body: "Off by default, in Settings > Privacy. When on, every message and search box asks your phone's keyboard app not to learn from what you type there, not to show word suggestions, and not to auto-correct. It's a request, not something that can be forced — most mainstream keyboards honor it, but one that doesn't can't be made to."
+        },
+        {
+          title: "Secure clipboard",
+          body: "When you copy a generated password or an OTP code inside the app, it's automatically cleared from your clipboard again about 45 seconds later — but only if you haven't copied something else in the meantime, so it never wipes out something unrelated."
+        },
+        {
+          title: "Scheduled messages",
+          body: "Write a message now and have it send itself later, with the option to send it silently so it doesn't trigger a notification on the recipient's end. Manage everything waiting to go out from a single list, per chat or across all of them."
+        },
+        {
+          title: "Note to Self",
+          body: "A private notepad that looks and behaves exactly like a chat, except the only person in it is you. It lives in the exact same encrypted on-device storage as your other chats — nothing about it is ever sent to any server — so it disappears along with everything else if a different account signs in on your device or your local data gets wiped."
+        },
+        {
+          title: "Shake to lock",
+          body: "Turn it on in Settings > Security, and three sharp, deliberate shakes of your phone lock the app instantly — a fast option for the moment someone walks in unexpectedly. A single bump or normal handling doesn't trigger it."
+        },
+        {
+          title: "In-chat message search",
+          body: "Search within one specific conversation, alongside the global search across everything that already existed. Since messages are already stored decrypted on your device, this is instant and needs no network round trip."
+        },
+        {
+          title: "Per-chat accent color",
+          body: "Recolor one chat's sent bubbles, send button, and links — separate from that chat's wallpaper, and like every other display preference, it's saved only on your device and never seen by the other person."
+        },
+        {
+          title: "Multiple devices",
+          body: "Off by default — a single active device stays the standard, unchanged behavior. Turn it on and you can choose a limit of up to 5 devices signed in at once, manage the list, and remove any of them, all from Account security."
+        }
+      ],
+      changed: [
+        {
+          title: "Story privacy",
+          body: "The audience picker used for your app-wide default Story privacy and for a one-off override on a specific post is now the exact same screen in both places, instead of two separately built versions."
+        },
+        {
+          title: "Email change confirmation",
+          body: "Changing your account email now asks for the new address twice — a \"new email\" and \"confirm new email\" field, matching the same pattern already used for passwords — so a typo isn't discovered only after the change has already gone through."
+        },
+        {
+          title: "Privacy Policy, Terms & Conditions, and Community Guidelines",
+          body: "All three were substantially expanded to cover everything in this update — Communities, the Media Vault and Intruder Photo, chat themes, and more. See the updated pages for the full text."
+        }
+      ],
+      removed: []
+    }
+  },
+  {
     id: "forwarding-settings-revamp-2026-09-19",
     date: "September 19, 2026",
     tag: "major",
