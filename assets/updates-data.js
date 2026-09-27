@@ -20,6 +20,33 @@
  */
 window.NWISP_UPDATES = [
   {
+    id: "broadcast-live-location-2026-09-27",
+    date: "September 27, 2026",
+    tag: "added",
+    tagLabel: "Added",
+    title: "Broadcast lists and live location sharing",
+    intro:
+      "Two more ways to reach people the way you actually want to: a broadcast list for sending the same message to several contacts without a group existing, and live location for sharing where you are for a set amount of time.",
+    points: [
+      { type: "added", text: "Broadcast lists — send one message to several contacts at once, each as a normal private message" },
+      { type: "added", text: "Live location sharing — share your position for 15 minutes, 1 hour, or 8 hours" },
+    ],
+    detail: {
+      added: [
+        {
+          title: "Broadcast lists",
+          body: "A named list of contacts, kept only on your device — there's no shared group behind it, and the people on it are never told they're on it. Sending to the list fans out as a completely normal private message to each person individually; a reply comes back to you as an ordinary 1:1 reply, not into anything shared. It's genuinely different from a group: nobody on a broadcast list sees each other, or even knows the list exists."
+        },
+        {
+          title: "Live location sharing",
+          body: "Share your location for 15 minutes, 1 hour, or 8 hours, stoppable early at any time, visible only in that one chat. Worth being upfront about two real limits: first, the share invitation itself is a normal end-to-end encrypted message, but the position updates that follow it are not — they use the same kind of plain, real-time channel as typing indicators, since that's what continuous live updates need. Second, this doesn't have a dedicated background service, so an update can go quiet if your phone sits backgrounded for a while — the shared location always shows its real last-updated time rather than falsely claiming to still be live."
+        }
+      ],
+      changed: [],
+      removed: []
+    }
+  },
+  {
     id: "communities-vault-2fa-2026-09-26",
     date: "September 26, 2026",
     tag: "major",
