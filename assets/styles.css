@@ -1,11 +1,13 @@
 /* ============================================================
    NWisp — design tokens
-   Light, clean theme — plain typography, one accent color,
-   no gradients or glow. (Variable names kept from the old dark
-   theme so every rule below still works — only values changed.)
+   Light theme by default; dark theme applies when
+   <html data-theme="dark"> is set (see the theme-toggle script
+   in each page). Variable names kept from the old single-theme
+   version so every rule below still works unchanged.
    ============================================================ */
 :root{
   --bg: #FFFFFF;
+  --bg-rgb: 255,255,255;
   --bg-alt: #F6F7F9;
   --panel: #FFFFFF;
   --panel-2: #F6F7F9;
@@ -18,6 +20,7 @@
 
   --amber: #2554C7;
   --amber-dim: #B9C8EF;
+  --amber-hover: #1E44A8;
   --blue: #0D9488;
   --green: #16A34A;
   --red: #DC2626;
@@ -31,12 +34,37 @@
   --wrap: 1120px;
 }
 
+/* Dark theme — applied by the toggle script setting data-theme="dark"
+   on <html>. Same variable names, different values; every component
+   below adapts automatically since nothing else hardcodes a color. */
+:root[data-theme="dark"]{
+  --bg: #0B0D12;
+  --bg-rgb: 11,13,18;
+  --bg-alt: #12151C;
+  --panel: #12151C;
+  --panel-2: #171B22;
+  --border: #262B35;
+  --border-soft: #1D2129;
+
+  --text: #ECEEF2;
+  --text-muted: #9AA3B2;
+  --text-dim: #6B7280;
+
+  --amber: #6C93F5;
+  --amber-dim: #2E4372;
+  --amber-hover: #8AA9F8;
+  --blue: #2DD4BF;
+  --green: #4ADE80;
+  --red: #F87171;
+}
+
 *{ box-sizing: border-box; }
 html{ scroll-behavior: smooth; }
 
 body{
   margin: 0;
   background: var(--bg);
+  transition: background-color .2s ease, color .2s ease;
   color: var(--text);
   font-family: var(--font-body);
   font-size: 16px;
@@ -82,7 +110,7 @@ p{ margin: 0; }
   justify-content: space-between;
   gap: 24px;
   padding: 18px clamp(20px, 5vw, 56px);
-  background: rgba(255,255,255,0.85);
+  background: rgba(var(--bg-rgb), 0.85);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--border-soft);
 }
@@ -130,6 +158,26 @@ p{ margin: 0; }
 }
 .nav-cta:hover{ border-color: var(--amber-dim); color: var(--amber); }
 
+.theme-toggle{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: border-color .2s, color .2s;
+}
+.theme-toggle:hover{ border-color: var(--amber-dim); color: var(--amber); }
+.theme-toggle svg{ width: 16px; height: 16px; }
+.theme-toggle .icon-moon{ display: none; }
+:root[data-theme="dark"] .theme-toggle .icon-sun{ display: none; }
+:root[data-theme="dark"] .theme-toggle .icon-moon{ display: block; }
+
 .nav-toggle{
   display: none;
   flex-direction: column;
@@ -165,7 +213,7 @@ p{ margin: 0; }
     top: 100%;
     left: 0;
     right: 0;
-    background: #FFFFFF;
+    background: var(--bg);
     border-bottom: 1px solid var(--border-soft);
     max-height: 0;
     overflow: hidden;
@@ -176,7 +224,7 @@ p{ margin: 0; }
     padding: 16px clamp(20px, 5vw, 56px);
     border-top: 1px solid var(--border-soft);
     font-size: 15px;
-    background: #FFFFFF;
+    background: var(--bg);
     display: block;
   }
   .nav-cta{ display: none; }
